@@ -45,7 +45,7 @@ Planned workflow: Google Forms -> Google Sheets -> backend import/sync -> admin 
 - PostgreSQL + Prisma
 - Next.js Route Handlers for APIs
 - Cloudinary for image storage
-- Vercel deployment considered for later
+- Netlify (site + API) and Neon (PostgreSQL) for hosting, both on free plans
 
 ## Getting started
 1. Install Node.js 20.19.6 or a compatible supported version.
@@ -113,17 +113,18 @@ Public form submissions are rate limited per IP: contact 5 per 10 min, reviews 3
 
 Not yet included: the Google Sheets review import. Keep every value in `.env` server-side, and never commit `.env`.
 
-## Deploying (Vercel + Neon Postgres)
+## Deploying (Netlify + Neon Postgres, both free)
 
-1. **Database:** create a free Postgres database at [neon.tech](https://neon.tech) in the **AWS Asia Pacific (Singapore)** region (the app runs in Vercel's Singapore region, set in `vercel.json`). Copy two connection strings from its dashboard: the **pooled** one (host contains `-pooler`) and the **direct** one.
-2. **Push the code** to GitHub (`.env` is git-ignored and never pushed).
-3. **Vercel:** at [vercel.com/new](https://vercel.com/new), import the GitHub repo (framework: Next.js; leave build settings as default — Vercel runs the `vercel-build` script, which applies database migrations, then builds).
-4. **Environment variables** (Vercel → Project → Settings → Environment Variables), then redeploy:
+The website and the API are one Next.js app, so one Netlify site serves both. The database is Neon.
+
+1. **Database (Neon):** create a project at [neon.tech](https://neon.tech) in **AWS US East 2 (Ohio)**, the same region as Netlify's free-plan functions. From **Connect**, copy two connection strings: pooling **on** (host contains `-pooler`) and pooling **off**.
+2. **Site (Netlify):** at [app.netlify.com](https://app.netlify.com) → **Add new project → Import an existing project → GitHub**, pick this repo. Build settings come from `netlify.toml` (build: `npm run build:deploy`, which applies migrations; publish: `.next`; Node 22).
+3. **Environment variables** (Project configuration → Environment variables), then deploy:
 
    | Name | Value |
    | --- | --- |
-   | `DATABASE_URL` | Neon **pooled** connection string |
-   | `DIRECT_URL` | Neon **direct** connection string (used for migrations) |
+   | `DATABASE_URL` | Neon connection string, pooling **on** |
+   | `DIRECT_URL` | Neon connection string, pooling **off** (used for migrations) |
    | `ADMIN_EMAIL` | the admin login email |
    | `ADMIN_PASSWORD_HASH` | output of `npm run admin:hash -- "a-strong-password"` |
    | `ADMIN_SESSION_SECRET` | 32+ random characters, e.g. `openssl rand -base64 48` |
@@ -131,6 +132,8 @@ Not yet included: the Google Sheets review import. Keep every value in `.env` se
    | `ADMIN_API_TOKEN` | optional, for scripted admin access |
    | `CLOUDINARY_CLOUD_NAME` / `_API_KEY` / `_API_SECRET` | optional, enables image upload |
 
-5. Open `https://<your-project>.vercel.app/dolceadmin`, sign in, and add categories and menu items.
+4. Open `https://<your-site>.netlify.app/dolceadmin`, sign in, and add categories and menu items.
+
+**Free-plan budget:** 300 credits/month. A production deploy costs 15 credits, so batch your changes (roughly 15 deploys a month leaves plenty for traffic). Traffic is cheap: 10,000 requests ≈ 2 credits, 1 GB bandwidth = 20 credits. If credits run out the site pauses until the next monthly cycle; you're never charged on the Free plan.
 
 Use a different password and session secret in production than in local development.

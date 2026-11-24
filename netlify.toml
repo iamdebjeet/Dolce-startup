@@ -1,0 +1,9 @@
+# Netlify deploys both the website and the API routes (via Netlify's Next.js adapter, added automatically).
+[build]
+  # Generates the Prisma client, applies database migrations, then builds Next.js.
+  command = "npm run build:deploy"
+  publish = ".next"
+
+[build.environment]
+  # Prisma 7 needs Node 20.19+, 22.12+ or 24+.
+  NODE_VERSION = "22"
