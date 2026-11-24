@@ -1,0 +1,155 @@
+import Image from "next/image";
+import { Icon, Stars } from "../icons";
+import { Garland, Marigold } from "../decor";
+import SectionHead from "./SectionHead";
+import ContactForm from "../ContactForm";
+import { faqs, gallery, orderSteps, reviews } from "@/content/home";
+import { whatsappLink } from "@/lib/site";
+import tiramisuTray from "@/assets/images/tiramisu-tray.jpg";
+
+export function HowToOrder() {
+  return (
+    <section id="order" className="lp-section lp-order">
+      <div className="lp-shell">
+        <SectionHead center eyebrow="How to order" title={<>Three steps to something <em>sweet</em></>} hindi="ऑर्डर करना बहुत आसान है"
+          intro="We currently take orders on WhatsApp only — no apps, no sign-ups. Just say ciao!" />
+        <ol className="lp-steps">
+          {orderSteps.map((s, i) => (
+            <li key={s.title} className="lp-step reveal" style={{ "--d": `${i * 120}ms` } as React.CSSProperties}>
+              <span className="lp-step-num">{String(i + 1).padStart(2, "0")}</span>
+              <span className="lp-icon-badge"><Icon name={s.icon} size={26} /></span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))}
+        </ol>
+
+        <div className="lp-wa-panel reveal">
+          <div className="lp-wa-panel-img"><Image src={tiramisuTray} alt="" placeholder="blur" sizes="(max-width: 800px) 100vw, 420px" /></div>
+          <div className="lp-wa-panel-body">
+            <p className="lp-eyebrow lp-eyebrow--light"><Marigold /> Orders open</p>
+            <h3>Craving tiramisu? We’re one message away.</h3>
+            <p>Tell us your flavour, quantity and when you need it. For parties and festivals, message us a little in advance.</p>
+            <div className="lp-wa-panel-actions">
+              <a className="lp-btn lp-btn--wa lp-btn--lg" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+                <Icon name="whatsapp" /> Chat on WhatsApp
+              </a>
+              <span className="lp-wa-note"><Icon name="clock" size={16} /> We reply as quickly as we can</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function Gallery() {
+  return (
+    <section id="gallery" className="lp-section lp-gallery">
+      <div className="lp-shell">
+        <SectionHead center eyebrow="Gallery" title={<>Little moments of <em>dolce vita</em></>} hindi="मीठे पल" />
+        <div className="lp-gallery-grid">
+          {gallery.map((g, i) => (
+            <figure key={i} className={`lp-gallery-item reveal${g.tall ? " is-tall" : ""}`} style={{ "--d": `${(i % 4) * 80}ms` } as React.CSSProperties}>
+              <Image src={g.src} alt={g.alt} placeholder="blur" sizes="(max-width: 700px) 50vw, (max-width: 1100px) 33vw, 280px" />
+              <figcaption>{g.alt}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function Reviews() {
+  const avg = reviews.reduce((s, r) => s + r.rating, 0) / reviews.length;
+  const counts = [5, 4, 3, 2, 1].map((n) => ({ n, c: reviews.filter((r) => r.rating === n).length }));
+  return (
+    <section id="reviews" className="lp-section lp-reviews">
+      <div className="lp-shell">
+        <SectionHead center eyebrow="Kind words" title={<>Loved by our <em>customers</em></>} hindi="आपका प्यार, हमारी मिठास" />
+        <div className="lp-reviews-layout">
+          <aside className="lp-score reveal">
+            <strong>{avg.toFixed(1)}</strong>
+            <Stars rating={avg} size={22} />
+            <span>Based on {reviews.length} reviews</span>
+            <ul>
+              {counts.map(({ n, c }) => (
+                <li key={n}>
+                  <span>{n}★</span>
+                  <span className="lp-bar"><span style={{ width: `${(c / reviews.length) * 100}%` }} /></span>
+                  <span>{c}</span>
+                </li>
+              ))}
+            </ul>
+          </aside>
+          <div className="lp-review-grid">
+            {reviews.map((r, i) => (
+              <article key={r.name} className="lp-review reveal" style={{ "--d": `${(i % 3) * 100}ms` } as React.CSSProperties}>
+                <Icon name="quote" size={26} className="lp-review-quote" />
+                <Stars rating={r.rating} />
+                <p>{r.text}</p>
+                <footer>
+                  <span className="lp-avatar" aria-hidden="true">{r.name.split(/\s+/).filter((p) => /^\p{L}/u.test(p)).map((p) => p[0]).slice(0, 2).join("")}</span>
+                  <span><strong>{r.name}</strong><small>{r.item}</small></span>
+                </footer>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function Faq() {
+  return (
+    <section id="faq" className="lp-section lp-faq">
+      <div className="lp-shell lp-faq-grid">
+        <SectionHead eyebrow="FAQ" title={<>Good <em>questions</em></>} hindi="आपके सवाल, हमारे जवाब"
+          intro="Can’t find what you’re looking for? Just ask us on WhatsApp." />
+        <div className="lp-faq-list">
+          {faqs.map((f, i) => (
+            <details key={f.q} className="lp-faq-item reveal" style={{ "--d": `${i * 70}ms` } as React.CSSProperties} open={i === 0}>
+              <summary>{f.q}<Icon name="chevron" size={20} /></summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function Contact() {
+  return (
+    <section id="contact" className="lp-section lp-contact">
+      <Garland className="lp-contact-garland" count={34} />
+      <div className="lp-shell lp-contact-grid">
+        <div className="reveal">
+          <SectionHead light eyebrow="Get in touch" title={<>Let’s make your day a little <em>sweeter</em></>} hindi="चलिए बात करते हैं" />
+          <ul className="lp-contact-list">
+            <li>
+              <span className="lp-icon-badge"><Icon name="whatsapp" /></span>
+              <div><strong>Orders</strong><span>WhatsApp only — the fastest way to reach us.</span>
+                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer">Start a chat →</a></div>
+            </li>
+            <li>
+              <span className="lp-icon-badge"><Icon name="gift" /></span>
+              <div><strong>Parties & bulk orders</strong><span>Birthdays, festivals, office treats — message us in advance.</span></div>
+            </li>
+            <li>
+              <span className="lp-icon-badge"><Icon name="mail" /></span>
+              <div><strong>Everything else</strong><span>Collaborations, feedback or questions? Use the form and we’ll get back to you.</span></div>
+            </li>
+          </ul>
+        </div>
+        <div className="lp-contact-card reveal" style={{ "--d": "120ms" } as React.CSSProperties}>
+          <h3>Send us a message</h3>
+          <p className="lp-muted">Not for orders — for those, WhatsApp is quickest.</p>
+          <ContactForm />
+        </div>
+      </div>
+    </section>
+  );
+}

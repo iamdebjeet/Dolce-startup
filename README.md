@@ -10,22 +10,22 @@ This is the initial project scaffold based on the requirements discussed so far.
 - Signature product: Tiramisu
 - Menu starts empty. Admin will add categories and food items.
 
-## Planned public pages
-- `/` — Home
-- `/about` — About Us
-- `/menu` — Menu
-- `/reviews` — Reviews & Ratings
-- `/contact` — Contact Us
+## Public site
+`/` is a single page: Hero, Our Story, Motive/Mission/Vision, Tiramisu Trio, **Menu**, Italy meets India, How to Order, Café, Gallery, Reviews, FAQ, Contact. `/about`, `/menu`, `/reviews` and `/contact` redirect to their sections.
 
-## Planned admin portal
-- `/dolceadmin` — Admin entry point (currently a placeholder only)
-- One common admin account
-- Admin can create, edit, deactivate and delete categories (with safe deletion rules)
-- Admin can add, view, edit, make unavailable and delete menu items
-- Admin can manage multiple serving options and prices per food item
-- Admin can curate customer reviews before they appear publicly
+- Page copy, signature items, sample reviews and FAQ live in `src/content/home.ts`.
+- **Menu & WhatsApp ordering:** the Menu section shows the categories and items managed in `/dolceadmin` (live, per request). Customers add serving options to a basket (kept in their browser), add an optional name/note, and tap **Send order on WhatsApp**. That opens WhatsApp with the full order pre-written to DOLCE’s number; the customer taps Send. (Websites can’t send WhatsApp messages on a customer’s behalf.)
+- **WhatsApp number:** `NEXT_PUBLIC_WHATSAPP_NUMBER`, defaulting to `9102518045` in `src/lib/site.ts`. 10-digit numbers get `+91` added.
 
-**Security note:** the admin route is not protected yet. Do not deploy this placeholder as an operational admin portal. Authentication, server-side authorization, password hashing and session handling must be implemented before enabling admin mutations.
+## Admin portal
+- `/dolceadmin` — sign in with the single admin account (`ADMIN_EMAIL` / `ADMIN_PASSWORD_HASH`)
+- Create, edit, deactivate and delete categories (deletion is blocked while items use the category)
+- Add, edit, mark unavailable and delete menu items, with image upload to Cloudinary or a pasted URL
+- Manage multiple serving options and prices per item; individual options can be marked unavailable
+- Approve, hide or delete customer reviews before they appear publicly
+- View contact inquiries and mark them new / read / resolved
+
+Sessions are HMAC-signed, `HttpOnly`, `SameSite=Strict` cookies that expire after 12 hours. Passwords are stored only as scrypt hashes.
 
 ## Menu data model
 - `Category`: admin-managed categories such as Desserts, Soups, Starters and Beverages.
@@ -71,28 +71,66 @@ Open http://localhost:3000.
 
 ## API
 
-Every endpoint uses JSON. Public reads/submissions do not need a token. Admin endpoints require `Authorization: Bearer <ADMIN_API_TOKEN>`; set a long random `ADMIN_API_TOKEN` in `.env` before using them. The admin web page itself is still a placeholder and does not provide a login UI.
+Every endpoint uses JSON (except image upload, which is multipart). Public reads and submissions need no auth. Admin endpoints accept **either** the session cookie set by `/api/admin/login` (used by the admin portal) **or** `Authorization: Bearer <ADMIN_API_TOKEN>` (for scripts). Errors are returned as `{ "error": "message" }`. Prices are returned as numbers.
+
+Public form submissions are rate limited per IP: contact 5 per 10 min, reviews 3 per 10 min, login 5 per 15 min. The limiter is in-memory and per server instance.
 
 | Method | Endpoint | Access | Purpose |
 | --- | --- | --- | --- |
 | GET | `/api/categories` | Public | List active categories |
 | POST | `/api/categories` | Admin | Create category (`name`, optional `slug`, `description`, `sortOrder`, `isActive`) |
 | PATCH, DELETE | `/api/categories/:id` | Admin | Update or delete category; deletion is rejected while menu items reference it |
-| GET | `/api/menu` | Public | List available items with category and serving options |
-| POST | `/api/menu` | Admin | Create item (`name`, `description`, `categoryId`; optional `temperature`, `spiceIndex`, `imageUrl`, `imagePublicId`, `sortOrder`, `isAvailable`, `servingOptions: [{label, price}]`) |
-| PATCH, DELETE | `/api/menu/:id` | Admin | Update/delete item; send `servingOptions` to replace the options list |
+| GET | `/api/menu` | Public | List available items with category and available serving options |
+| GET | `/api/menu/:id` | Public | One available item |
+| POST | `/api/menu` | Admin | Create item (`name`, `description`, `categoryId`; optional `temperature`, `spiceIndex`, `imageUrl`, `imagePublicId`, `sortOrder`, `isAvailable`, `servingOptions: [{label, price, isAvailable?}]`) |
+| PATCH, DELETE | `/api/menu/:id` | Admin | Update/delete item; send `servingOptions` to replace the options list. Replaced or deleted Cloudinary images are removed. |
 | POST | `/api/contact` | Public | Submit inquiry (`name`, valid `email`, `message`, optional `phone`) |
-| GET | `/api/contact` | Admin | List inquiries, newest first |
 | GET | `/api/reviews` | Public | List approved reviews |
 | POST | `/api/reviews` | Public | Submit review (`name`, `text`, `rating` from 1 to 5); new reviews await approval |
+| POST | `/api/admin/login` | Public | `{ email, password }` → sets the session cookie |
+| POST | `/api/admin/logout` | Public | Clears the session cookie |
+| GET | `/api/admin/session` | Public | `{ authenticated: boolean }` |
+| GET | `/api/admin/categories` | Admin | All categories (including inactive) with `itemCount` |
+| GET | `/api/admin/menu` | Admin | All items, including unavailable items and options |
+| POST | `/api/admin/upload` | Admin | Multipart `file` (JPEG/PNG/WebP/AVIF, ≤ 5 MB) → `{ imageUrl, imagePublicId }` |
 | GET | `/api/admin/reviews` | Admin | List all reviews |
 | PATCH, DELETE | `/api/admin/reviews/:id` | Admin | Set `{ "isApproved": true|false }` or delete review |
+| GET | `/api/admin/inquiries` | Admin | List inquiries, newest first; optional `?status=NEW|READ|RESOLVED` (`GET /api/contact` is an older alias) |
+| PATCH, DELETE | `/api/admin/inquiries/:id` | Admin | Set `{ "status": "NEW"|"READ"|"RESOLVED" }` or delete |
 
 ## Database setup
 
-1. Copy `.env.example` to `.env`, then set `DATABASE_URL` to a reachable PostgreSQL database and replace `ADMIN_API_TOKEN` with a long random secret.
-2. Run `npm install` and `npm run db:generate`.
-3. Apply the checked-in schema migration with `npm run db:migrate` during development, or `npm run db:deploy` in a deployment environment.
-4. Start the app with `npm run dev`.
+1. Copy `.env.example` to `.env` and set `DATABASE_URL` to a reachable PostgreSQL database. For a quick local one:
+   `docker run -d --name dolce-pg -e POSTGRES_PASSWORD=dolce -e POSTGRES_DB=dolce -p 5432:5432 postgres:16-alpine`
+2. Set up the admin login in `.env`:
+   - `ADMIN_EMAIL`: the admin's email
+   - `ADMIN_PASSWORD_HASH`: the output of `npm run admin:hash -- "your-password"`
+   - `ADMIN_SESSION_SECRET`: 32+ random characters (`openssl rand -base64 48`)
+   - optionally `ADMIN_API_TOKEN` for scripted access, and the `CLOUDINARY_*` keys for image upload
+3. Run `npm install` and `npm run db:generate`.
+4. Apply the checked-in schema migration with `npm run db:migrate` during development, or `npm run db:deploy` in a deployment environment.
+5. Start the app with `npm run dev`, then sign in at http://localhost:3000/dolceadmin.
 
-This scaffold does not include admin login/session UI, Cloudinary upload, rate limiting, or the Google Sheets import. Protect the token as a server secret; do not place it in browser code or commit `.env`.
+Not yet included: the Google Sheets review import. Keep every value in `.env` server-side, and never commit `.env`.
+
+## Deploying (Vercel + Neon Postgres)
+
+1. **Database:** create a free Postgres database at [neon.tech](https://neon.tech). Copy two connection strings from its dashboard: the **pooled** one (host contains `-pooler`) and the **direct** one.
+2. **Push the code** to GitHub (`.env` is git-ignored and never pushed).
+3. **Vercel:** at [vercel.com/new](https://vercel.com/new), import the GitHub repo (framework: Next.js; leave build settings as default — Vercel runs the `vercel-build` script, which applies database migrations, then builds).
+4. **Environment variables** (Vercel → Project → Settings → Environment Variables), then redeploy:
+
+   | Name | Value |
+   | --- | --- |
+   | `DATABASE_URL` | Neon **pooled** connection string |
+   | `DIRECT_URL` | Neon **direct** connection string (used for migrations) |
+   | `ADMIN_EMAIL` | the admin login email |
+   | `ADMIN_PASSWORD_HASH` | output of `npm run admin:hash -- "a-strong-password"` |
+   | `ADMIN_SESSION_SECRET` | 32+ random characters, e.g. `openssl rand -base64 48` |
+   | `NEXT_PUBLIC_WHATSAPP_NUMBER` | `9102518045` |
+   | `ADMIN_API_TOKEN` | optional, for scripted admin access |
+   | `CLOUDINARY_CLOUD_NAME` / `_API_KEY` / `_API_SECRET` | optional, enables image upload |
+
+5. Open `https://<your-project>.vercel.app/dolceadmin`, sign in, and add categories and menu items.
+
+Use a different password and session secret in production than in local development.
