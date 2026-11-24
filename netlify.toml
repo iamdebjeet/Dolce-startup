@@ -7,3 +7,6 @@
 [build.environment]
   # Prisma 7 needs Node 20.19+, 22.12+ or 24+.
   NODE_VERSION = "22"
+  # The WhatsApp number is public (it's in every order link), not a secret — don't fail the
+  # build's secret scan because it also appears in the code. Real secrets are still scanned.
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_WHATSAPP_NUMBER"
