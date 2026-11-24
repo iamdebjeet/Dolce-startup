@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Temperature {
+  HOT
+  NORMAL
+  CHILLED
+}
+
+model Category {
+  id          String     @id @default(uuid())
+  name        String     @unique
+  slug        String     @unique
+  description String?
+  isActive    Boolean    @default(true)
+  sortOrder   Int        @default(0)
+
+  menuItems   MenuItem[]
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model MenuItem {
+  id             String          @id @default(uuid())
+  name           String
+  description    String          @db.Text
+
+  categoryId     String
+  category       Category        @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  temperature    Temperature     @default(NORMAL)
+  spiceIndex     Int             @default(0)
+
+  imageUrl       String?
+  imagePublicId  String?
+
+  isAvailable    Boolean         @default(true)
+  sortOrder      Int             @default(0)
+
+  servingOptions ServingOption[]
+
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([categoryId])
+  @@index([isAvailable])
+}
+
+model ServingOption {
+  id          String    @id @default(uuid())
+
+  menuItemId  String
+  menuItem    MenuItem  @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  label       String
+  price       Decimal   @db.Decimal(10, 2)
+  isAvailable Boolean   @default(true)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([menuItemId, label])
+  @@index([menuItemId])
+}
+
+model ContactInquiry {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  phone     String?
+  message   String   @db.Text
+  status    String   @default("NEW")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, createdAt])
+}
+
+model Review {
+  id         String   @id @default(uuid())
+  name       String
+  rating     Int
+  text       String   @db.Text
+  isApproved Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([isApproved, createdAt])
+}
