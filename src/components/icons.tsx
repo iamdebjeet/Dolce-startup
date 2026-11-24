@@ -1,6 +1,6 @@
 import type { IconName } from "@/content/home";
 
-type Name = IconName | "menu" | "close" | "arrow" | "quote" | "pin" | "mail" | "instagram" | "chevron";
+type Name = IconName | "menu" | "close" | "arrow" | "quote" | "pin" | "mail" | "instagram" | "chevron" | "camera";
 
 const paths: Record<Name, React.ReactNode> = {
   heart: <path d="M12 20s-7-4.4-9.2-9A5 5 0 0 1 12 6a5 5 0 0 1 9.2 5c-2.2 4.6-9.2 9-9.2 9Z" />,
@@ -21,6 +21,7 @@ const paths: Record<Name, React.ReactNode> = {
   close: <path d="M6 6l12 12M18 6 6 18" />,
   arrow: <path d="M5 12h14M13 6l6 6-6 6" />,
   chevron: <path d="m6 9 6 6 6-6" />,
+  camera: <><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z" /><circle cx="12" cy="13" r="3.5" /></>,
   quote: <path d="M10 7H6a2 2 0 0 0-2 2v3h5v5H4M20 7h-4a2 2 0 0 0-2 2v3h5v5h-5" />,
   pin: <><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z" /><circle cx="12" cy="9.5" r="2.5" /></>,
   mail: <><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></>,

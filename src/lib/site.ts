@@ -2,7 +2,7 @@
  * Site-wide settings.
  * WhatsApp number: NEXT_PUBLIC_WHATSAPP_NUMBER overrides the default. A 10-digit Indian number gets the 91 country code added.
  */
-const DEFAULT_WHATSAPP = "9102518045";
+const DEFAULT_WHATSAPP = "8338027212";
 
 function normaliseWhatsApp(raw: string) {
   const digits = raw.replace(/\D/g, "").replace(/^0+/, "");
@@ -14,6 +14,8 @@ export const site = {
   tagline: "A Little Taste of Italy",
   hindiTagline: "इटली का एक मीठा स्वाद",
   whatsappNumber: normaliseWhatsApp(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || DEFAULT_WHATSAPP),
+  /** Google Form where customers rate & review DOLCE (used by the review QR code and button). */
+  reviewFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdjOyWIKz2QctRep1xO0uUYQWjb8kQukceA83U-4syXOXI3jQ/viewform",
 };
 
 /** wa.me link that opens a chat with DOLCE's number and a pre-filled message (the customer taps Send). */

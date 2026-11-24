@@ -275,7 +275,7 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
 
 /* ---------- Reviews ---------- */
 .lp-reviews { background: linear-gradient(180deg, var(--blush), var(--cream)); }
-.lp-reviews-layout { display: grid; grid-template-columns: 280px 1fr; gap: 28px; align-items: start; }
+.lp-reviews-layout { display: block; }
 .lp-score { position: sticky; top: 110px; text-align: center; padding: 32px 26px; border-radius: 26px; background: var(--vino); color: var(--ivory); box-shadow: var(--shadow); }
 .lp-score > strong { display: block; font: 600 68px/1 var(--display); color: var(--haldi); }
 .lp-score > span { display: block; font: 14px var(--sans); color: rgba(255,251,243,.8); margin: 10px 0 18px; }
@@ -458,3 +458,78 @@ body.has-basket .lp-fab { bottom: calc(92px + env(safe-area-inset-bottom, 0px));
 .mn-sent p { display: flex; gap: 8px; align-items: center; margin: 0 0 10px; }
 .mn-sent-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
 .mn-fine { margin: 0; font: 12px/1.5 var(--sans); color: var(--muted); text-align: center; }
+
+/* =====================================================================
+   Reviews: print-style "Scan to rate & review" poster + call to action
+   ===================================================================== */
+:root { --script: var(--font-script), "Brush Script MT", cursive; --sepia: #5c2f1d; --poster-gold: #c9a46a; }
+
+.rv-feature { display: grid; grid-template-columns: minmax(0, 420px) 1fr; gap: clamp(30px, 6vw, 84px); align-items: center; margin-bottom: 72px; }
+.rv-cta h3 { font: 500 clamp(32px, 4vw, 46px)/1.1 var(--display); color: var(--espresso); margin: 12px 0 6px; }
+.rv-cta h3 em { font-family: var(--script); font-style: normal; font-size: 1.35em; color: var(--sepia); line-height: .8; }
+.rv-cta .lp-hindi { font-size: 19px; margin: 0 0 14px; }
+.rv-lead { font: 16.5px/1.7 var(--sans); color: #5c4a3e; margin: 0 0 22px; max-width: 520px; }
+.rv-steps { list-style: none; padding: 0; margin: 0 0 26px; display: grid; gap: 12px; }
+.rv-steps li { display: flex; align-items: center; gap: 14px; font: 15.5px var(--sans); color: #4f3e33; }
+.rv-steps li > span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; flex: none; background: var(--ivory); border: 1.5px solid var(--poster-gold); color: var(--sepia); font: 600 15px var(--display); }
+.rv-steps strong { color: var(--espresso); }
+.rv-button { background: linear-gradient(180deg, #6b3a26, #4e2717); box-shadow: 0 12px 26px -12px #4e2717; border: 2px solid var(--poster-gold); }
+.rv-button:hover { background: linear-gradient(180deg, #7a4430, #5a2d1a); }
+.rv-button svg { color: var(--haldi); }
+.rv-note { font: 13.5px var(--sans); color: var(--muted); margin: 12px 0 0; }
+.rv-score { display: grid; grid-template-columns: auto 1fr; gap: 26px; align-items: center; margin-top: 30px; padding: 20px 24px; border-radius: 20px; background: var(--ivory); border: 1px solid var(--line); max-width: 520px; }
+.rv-score-num { display: grid; justify-items: center; gap: 4px; padding-right: 26px; border-right: 1px dashed var(--line); }
+.rv-score-num strong { font: 600 48px/1 var(--display); color: var(--vino); }
+.rv-score-num > span:last-child { font: 12.5px var(--sans); color: var(--muted); }
+.rv-score ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.rv-score li { display: grid; grid-template-columns: 26px 1fr 16px; gap: 8px; align-items: center; font: 12px var(--sans); color: var(--cocoa); }
+.rv-score .lp-bar { background: var(--blush); }
+@media (max-width: 900px) {
+  .rv-feature { grid-template-columns: 1fr; justify-items: center; }
+  .rv-feature > div:first-child { width: min(420px, 100%); }
+  .rv-cta { text-align: center; }
+  .rv-lead, .rv-score { margin-inline: auto; }
+  .rv-steps { justify-content: center; text-align: left; }
+}
+@media (max-width: 460px) { .rv-cta h3 { font-size: 26px; } .rv-score { grid-template-columns: 1fr; } .rv-score-num { border-right: 0; padding-right: 0; border-bottom: 1px dashed var(--line); padding-bottom: 14px; } }
+
+/* "Dolce ticket" review card */
+.rq { width: min(400px, 100%); margin: 0 auto; filter: drop-shadow(0 28px 40px rgba(74, 36, 18, .28)); transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+.rq:hover { transform: translateY(-6px) rotate(-.6deg); }
+
+.rq-top { position: relative; overflow: hidden; border-radius: 28px 28px 0 0; padding: 30px 28px 30px; color: #fff; text-align: center; isolation: isolate; }
+.rq-top-img { object-fit: cover; object-position: 50% 60%; z-index: -2; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.rq:hover .rq-top-img { transform: scale(1.06); }
+.rq-top::after { content: ""; position: absolute; inset: 0; z-index: -1; background:
+  radial-gradient(120% 80% at 50% 0%, rgba(107, 30, 46, .55), transparent 70%),
+  linear-gradient(180deg, rgba(78, 18, 32, .72) 0%, rgba(78, 18, 32, .86) 55%, rgba(58, 12, 24, .96) 100%); }
+.rq-brand { display: inline-block; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(242, 193, 78, .55); color: var(--haldi); font: 700 10.5px var(--sans); letter-spacing: .28em; text-transform: uppercase; }
+.rq-title { margin: 16px 0 12px; font: 500 34px/1.1 var(--display); color: #fff; }
+.rq-title em { font-family: var(--script); font-style: normal; font-size: 1.35em; color: var(--haldi); line-height: .7; }
+.rq-stars { display: flex; justify-content: center; gap: 6px; color: var(--haldi); }
+.rq-stars span { display: inline-flex; filter: drop-shadow(0 2px 6px rgba(242, 193, 78, .5)); }
+html.js .reveal .rq-stars span { opacity: 0; transform: scale(.4) rotate(-30deg); }
+html.js .reveal.is-in .rq-stars span { animation: rq-star .55s cubic-bezier(.2,1.4,.4,1) calc(.45s + var(--i) * .12s) both; }
+@keyframes rq-star { to { opacity: 1; transform: none; } }
+.rq-sub { margin: 12px 0 0; font: 14px var(--sans); color: rgba(255, 255, 255, .82); }
+
+/* Perforated tear line with real cut-out notches */
+.rq-tear { position: relative; height: 30px; background: var(--ivory);
+  -webkit-mask: radial-gradient(circle 15px at 0 50%, transparent 14.5px, #000 15px) left / 51% 100% no-repeat, radial-gradient(circle 15px at 100% 50%, transparent 14.5px, #000 15px) right / 51% 100% no-repeat;
+  mask: radial-gradient(circle 15px at 0 50%, transparent 14.5px, #000 15px) left / 51% 100% no-repeat, radial-gradient(circle 15px at 100% 50%, transparent 14.5px, #000 15px) right / 51% 100% no-repeat; }
+.rq-tear::before { content: ""; position: absolute; left: 24px; right: 24px; top: 50%; border-top: 2px dashed rgba(176, 139, 82, .5); }
+
+.rq-bottom { background: var(--ivory); border-radius: 0 0 28px 28px; padding: 4px 28px 26px; text-align: center; }
+.rq-qr { position: relative; display: block; width: min(232px, 78%); margin: 6px auto 0; padding: 16px; border-radius: 18px; background: #fff; box-shadow: 0 10px 24px -16px rgba(42, 25, 18, .6), inset 0 0 0 1px var(--line); transition: transform .25s; forced-color-adjust: none; }
+.rq-qr:hover { transform: scale(1.03); }
+.rq-qr-code, .rq-qr-code svg { display: block; width: 100%; height: auto; }
+.rq-corner { position: absolute; width: 26px; height: 26px; border: 3.5px solid var(--saffron); animation: rq-pulse 2.6s ease-in-out infinite; }
+.rq-corner--tl { top: -9px; left: -9px; border-right: 0; border-bottom: 0; border-radius: 12px 0 0 0; }
+.rq-corner--tr { top: -9px; right: -9px; border-left: 0; border-bottom: 0; border-radius: 0 12px 0 0; }
+.rq-corner--bl { bottom: -9px; left: -9px; border-right: 0; border-top: 0; border-radius: 0 0 0 12px; }
+.rq-corner--br { bottom: -9px; right: -9px; border-left: 0; border-top: 0; border-radius: 0 0 12px 0; }
+@keyframes rq-pulse { 0%, 100% { opacity: 1; scale: 1; } 50% { opacity: .55; scale: 1.08; } }
+.rq-hint { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 20px 0 6px; font: 600 14px var(--sans); color: var(--cocoa); }
+.rq-hint svg { color: var(--saffron-text); }
+.rq-link { display: inline-flex; align-items: center; gap: 6px; font: 600 13.5px var(--sans); color: var(--vino); border-bottom: 1.5px solid var(--haldi); padding-bottom: 1px; }
+.rq-link:hover { color: var(--vino-dark); border-color: var(--saffron); }

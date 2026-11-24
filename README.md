@@ -15,7 +15,7 @@ This is the initial project scaffold based on the requirements discussed so far.
 
 - Page copy, signature items, sample reviews and FAQ live in `src/content/home.ts`.
 - **Menu & WhatsApp ordering:** the Menu section shows the categories and items managed in `/dolceadmin` (live, per request). Customers add serving options to a basket (kept in their browser), add an optional name/note, and tap **Send order on WhatsApp**. That opens WhatsApp with the full order pre-written to DOLCE’s number; the customer taps Send. (Websites can’t send WhatsApp messages on a customer’s behalf.)
-- **WhatsApp number:** `NEXT_PUBLIC_WHATSAPP_NUMBER`, defaulting to `9102518045` in `src/lib/site.ts`. 10-digit numbers get `+91` added.
+- **WhatsApp number:** `NEXT_PUBLIC_WHATSAPP_NUMBER`, defaulting to `8338027212` in `src/lib/site.ts`. 10-digit numbers get `+91` added.
 
 ## Admin portal
 - `/dolceadmin` — sign in with the single admin account (`ADMIN_EMAIL` / `ADMIN_PASSWORD_HASH`)
@@ -127,7 +127,7 @@ Not yet included: the Google Sheets review import. Keep every value in `.env` se
    | `ADMIN_EMAIL` | the admin login email |
    | `ADMIN_PASSWORD_HASH` | output of `npm run admin:hash -- "a-strong-password"` |
    | `ADMIN_SESSION_SECRET` | 32+ random characters, e.g. `openssl rand -base64 48` |
-   | `NEXT_PUBLIC_WHATSAPP_NUMBER` | `9102518045` |
+   | `NEXT_PUBLIC_WHATSAPP_NUMBER` | `8338027212` |
    | `ADMIN_API_TOKEN` | optional, for scripted admin access |
    | `CLOUDINARY_CLOUD_NAME` / `_API_KEY` / `_API_SECRET` | optional, enables image upload |
 

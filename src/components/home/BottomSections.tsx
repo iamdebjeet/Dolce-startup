@@ -3,8 +3,9 @@ import { Icon, Stars } from "../icons";
 import { Garland, Marigold } from "../decor";
 import SectionHead from "./SectionHead";
 import ContactForm from "../ContactForm";
+import ReviewQrCard from "./ReviewQrCard";
 import { faqs, gallery, orderSteps, reviews } from "@/content/home";
-import { whatsappLink } from "@/lib/site";
+import { site, whatsappLink } from "@/lib/site";
 import tiramisuTray from "@/assets/images/tiramisu-tray.jpg";
 
 export function HowToOrder() {
@@ -67,22 +68,45 @@ export function Reviews() {
   return (
     <section id="reviews" className="lp-section lp-reviews">
       <div className="lp-shell">
-        <SectionHead center eyebrow="Kind words" title={<>Loved by our <em>customers</em></>} hindi="आपका प्यार, हमारी मिठास" />
+        <SectionHead center eyebrow="Reviews & ratings" title={<>Loved by our <em>customers</em></>} hindi="आपका प्यार, हमारी मिठास" />
+
+        <div className="rv-feature">
+          <div className="reveal"><ReviewQrCard /></div>
+          <div className="rv-cta reveal" style={{ "--d": "120ms" } as React.CSSProperties}>
+            <p className="lp-eyebrow"><Marigold /> Your feedback matters</p>
+            <h3>Loved your <em>Dolce</em>? Tell us!</h3>
+            <p className="lp-hindi" lang="hi">आपकी राय हमारे लिए खास है</p>
+            <p className="rv-lead">Your rating helps us make every tiramisu better — and helps others discover DOLCE. It takes less than a minute.</p>
+            <ol className="rv-steps">
+              <li><span>1</span><div><strong>Scan the QR code</strong> with your phone camera</div></li>
+              <li><span>2</span><div><strong>Rate us</strong> and share your experience</div></li>
+              <li><span>3</span><div><strong>That’s it</strong> — grazie mille!</div></li>
+            </ol>
+            <a className="lp-btn lp-btn--primary lp-btn--lg rv-button" href={site.reviewFormUrl} target="_blank" rel="noopener noreferrer">
+              <Icon name="star" size={20} filled /> Rate &amp; Review DOLCE
+            </a>
+            <p className="rv-note">On your phone? Just tap the button — it opens our review form.</p>
+
+            <div className="rv-score">
+              <div className="rv-score-num">
+                <strong>{avg.toFixed(1)}</strong>
+                <Stars rating={avg} size={18} />
+                <span>{reviews.length} reviews</span>
+              </div>
+              <ul>
+                {counts.map(({ n, c }) => (
+                  <li key={n}>
+                    <span>{n}★</span>
+                    <span className="lp-bar"><span style={{ width: `${(c / reviews.length) * 100}%` }} /></span>
+                    <span>{c}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
         <div className="lp-reviews-layout">
-          <aside className="lp-score reveal">
-            <strong>{avg.toFixed(1)}</strong>
-            <Stars rating={avg} size={22} />
-            <span>Based on {reviews.length} reviews</span>
-            <ul>
-              {counts.map(({ n, c }) => (
-                <li key={n}>
-                  <span>{n}★</span>
-                  <span className="lp-bar"><span style={{ width: `${(c / reviews.length) * 100}%` }} /></span>
-                  <span>{c}</span>
-                </li>
-              ))}
-            </ul>
-          </aside>
           <div className="lp-review-grid">
             {reviews.map((r, i) => (
               <article key={r.name} className="lp-review reveal" style={{ "--d": `${(i % 3) * 100}ms` } as React.CSSProperties}>

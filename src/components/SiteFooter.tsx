@@ -17,6 +17,7 @@ export default function SiteFooter({ onHome = false }: { onHome?: boolean }) {
           <a href={h("story")}>Our Story</a>
           <a href={h("tiramisu")}>Signature Tiramisu</a>
           <a href={h("reviews")}>Reviews</a>
+          <a href={site.reviewFormUrl} target="_blank" rel="noopener noreferrer">Rate &amp; Review us ↗</a>
           <a href={h("menu")}>Menu</a>
         </nav>
         <div>

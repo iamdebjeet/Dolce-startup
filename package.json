@@ -18,17 +18,19 @@
     "@prisma/adapter-pg": "^7.10.1",
     "@prisma/client": "^7.10.1",
     "next": "latest",
+    "qrcode": "1.5.4",
     "react": "latest",
     "react-dom": "latest"
   },
   "devDependencies": {
     "@types/node": "latest",
+    "@types/qrcode": "1.5.5",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "dotenv": "^17.2.3",
-    "pg": "^8.16.3",
     "eslint": "latest",
     "eslint-config-next": "latest",
+    "pg": "^8.16.3",
     "prisma": "^7.10.1",
     "typescript": "latest"
   }
