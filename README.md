@@ -115,7 +115,7 @@ Not yet included: the Google Sheets review import. Keep every value in `.env` se
 
 ## Deploying (Vercel + Neon Postgres)
 
-1. **Database:** create a free Postgres database at [neon.tech](https://neon.tech). Copy two connection strings from its dashboard: the **pooled** one (host contains `-pooler`) and the **direct** one.
+1. **Database:** create a free Postgres database at [neon.tech](https://neon.tech) in the **AWS Asia Pacific (Singapore)** region (the app runs in Vercel's Singapore region, set in `vercel.json`). Copy two connection strings from its dashboard: the **pooled** one (host contains `-pooler`) and the **direct** one.
 2. **Push the code** to GitHub (`.env` is git-ignored and never pushed).
 3. **Vercel:** at [vercel.com/new](https://vercel.com/new), import the GitHub repo (framework: Next.js; leave build settings as default — Vercel runs the `vercel-build` script, which applies database migrations, then builds).
 4. **Environment variables** (Vercel → Project → Settings → Environment Variables), then redeploy:
