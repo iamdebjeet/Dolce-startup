@@ -1,4 +1,5 @@
 import { getPublicMenu } from "@/lib/data";
+import { getDeliverySettingsSafe } from "@/lib/settings";
 import ChatLinks from "../ChatLinks";
 import { Icon } from "../icons";
 import { VegMark } from "../decor";
@@ -22,12 +23,14 @@ function Head() {
 export default async function MenuSection() {
   let menu: Awaited<ReturnType<typeof getPublicMenu>> = [];
   let failed = false;
+  const deliveryPromise = getDeliverySettingsSafe();
   try {
     menu = await getPublicMenu();
   } catch (error) {
     console.error("Menu unavailable", error);
     failed = true;
   }
+  const delivery = await deliveryPromise;
 
   return (
     <section id="menu" className="lp-section mn">
@@ -41,7 +44,7 @@ export default async function MenuSection() {
             <ChatLinks whatsappMessage="Hi DOLCE! I'd like to place an order." />
           </div>
         ) : (
-          <MenuBrowser menu={menu} />
+          <MenuBrowser menu={menu} delivery={delivery} />
         )}
       </div>
     </section>

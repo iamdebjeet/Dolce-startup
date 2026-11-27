@@ -42,3 +42,8 @@ export type ContactInquiry = Prisma.ContactInquiryModel
  * 
  */
 export type Review = Prisma.ReviewModel
+/**
+ * Model DeliverySettings
+ * Delivery & pickup settings edited in /dolceadmin (a single row with id "default").
+ */
+export type DeliverySettings = Prisma.DeliverySettingsModel

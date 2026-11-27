@@ -25,7 +25,7 @@ export function Hero() {
       <div className="lp-shell lp-hero-grid">
         <div className="lp-hero-copy">
           <div className="lp-hero-badges reveal">
-            <p className="lp-pill"><span className="lp-pill-dot" /> Benvenuti · Italian café, made in India</p>
+            <p className="lp-pill"><span className="lp-pill-dot" /> Benvenuti · Italian café in Bhubaneswar</p>
             <PureVegBadge />
           </div>
           <h1 className="reveal" style={{ "--d": "80ms" } as React.CSSProperties}>
@@ -114,7 +114,7 @@ export function Story() {
               the slow, joyful café culture of Italy: a good coffee, a spoon of tiramisu, and time with the people you love.
             </p>
             <p>
-              We wanted that feeling here at home in India. So we started where every Italian dessert story starts — with
+              We wanted that feeling here at home in Bhubaneswar. So we started where every Italian dessert story starts — with
               <strong> tiramisu</strong>. We make it by hand, layer by layer, and serve it with the warmth of Indian
               hospitality, because here, <em>atithi devo bhava</em> — every guest is family.
             </p>

@@ -401,7 +401,8 @@ export const ModelName = {
   MenuItem: 'MenuItem',
   ServingOption: 'ServingOption',
   ContactInquiry: 'ContactInquiry',
-  Review: 'Review'
+  Review: 'Review',
+  DeliverySettings: 'DeliverySettings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -417,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "menuItem" | "servingOption" | "contactInquiry" | "review"
+    modelProps: "category" | "menuItem" | "servingOption" | "contactInquiry" | "review" | "deliverySettings"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -791,6 +792,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DeliverySettings: {
+      payload: Prisma.$DeliverySettingsPayload<ExtArgs>
+      fields: Prisma.DeliverySettingsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DeliverySettingsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliverySettingsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DeliverySettingsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliverySettingsPayload>
+        }
+        findFirst: {
+          args: Prisma.DeliverySettingsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliverySettingsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DeliverySettingsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliverySettingsPayload>
+        }
+        findMany: {
+          args: Prisma.DeliverySettingsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliverySettingsPayload>[]
+        }
+        create: {
+          args: Prisma.DeliverySettingsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliverySettingsPayload>
+        }
+        createMany: {
+          args: Prisma.DeliverySettingsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DeliverySettingsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliverySettingsPayload>[]
+        }
+        delete: {
+          args: Prisma.DeliverySettingsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliverySettingsPayload>
+        }
+        update: {
+          args: Prisma.DeliverySettingsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliverySettingsPayload>
+        }
+        deleteMany: {
+          args: Prisma.DeliverySettingsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DeliverySettingsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DeliverySettingsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliverySettingsPayload>[]
+        }
+        upsert: {
+          args: Prisma.DeliverySettingsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliverySettingsPayload>
+        }
+        aggregate: {
+          args: Prisma.DeliverySettingsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDeliverySettings>
+        }
+        groupBy: {
+          args: Prisma.DeliverySettingsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DeliverySettingsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DeliverySettingsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DeliverySettingsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -904,6 +979,20 @@ export const ReviewScalarFieldEnum = {
 } as const
 
 export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
+
+
+export const DeliverySettingsScalarFieldEnum = {
+  id: 'id',
+  chargeMode: 'chargeMode',
+  fixedFee: 'fixedFee',
+  perKmRate: 'perKmRate',
+  minimumCharge: 'minimumCharge',
+  freeAbove: 'freeAbove',
+  pickupEnabled: 'pickupEnabled',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DeliverySettingsScalarFieldEnum = (typeof DeliverySettingsScalarFieldEnum)[keyof typeof DeliverySettingsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1182,6 +1271,7 @@ export type GlobalOmitConfig = {
   servingOption?: Prisma.ServingOptionOmit
   contactInquiry?: Prisma.ContactInquiryOmit
   review?: Prisma.ReviewOmit
+  deliverySettings?: Prisma.DeliverySettingsOmit
 }
 
 /* Types for Logging */

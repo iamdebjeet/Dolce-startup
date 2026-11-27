@@ -4,7 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { getPublicMenu, MenuItemDTO } from "@/lib/data";
 import { basketKey, useBasket } from "@/lib/basket";
 import { buildOrderMessage, formatRupees, orderTotals, type OrderLine } from "@/lib/order";
-import { instagramDmUrl, whatsappLink } from "@/lib/site";
+import { instagramDmUrl, site, whatsappLink } from "@/lib/site";
+import { amountToFreeDelivery, deliveryQuote, knownFee, quoteLabel, type DeliverySettingsDTO, type Fulfilment } from "@/lib/delivery";
 import { Icon } from "../icons";
 import { VegMark } from "../decor";
 
@@ -37,8 +38,10 @@ function Stepper({ qty, onChange, label }: { qty: number; onChange: (q: number) 
   );
 }
 
-export default function MenuBrowser({ menu }: { menu: Menu }) {
+export default function MenuBrowser({ menu, delivery }: { menu: Menu; delivery: DeliverySettingsDTO }) {
   const { basket, setQty, clear } = useBasket();
+  const [method, setMethod] = useState<Fulfilment>("delivery");
+  const [area, setArea] = useState("");
   const [tab, setTab] = useState<string>("all");
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
@@ -84,7 +87,11 @@ export default function MenuBrowser({ menu }: { menu: Menu }) {
   }, [basket, entries]);
 
   const { count, total, hasUnpriced } = orderTotals(lines);
-  const message = buildOrderMessage(lines, { name, note });
+  const fulfilment: Fulfilment = delivery.pickupEnabled ? method : "delivery";
+  const quote = deliveryQuote(total, delivery, fulfilment);
+  const fee = knownFee(quote);
+  const toFree = amountToFreeDelivery(total, delivery, fulfilment);
+  const message = buildOrderMessage(lines, { name, note, fulfilment: { method: fulfilment, area, quote, city: site.city } });
   const visible = tab === "all" ? menu : menu.filter((c) => c.id === tab);
 
   // Lift the floating WhatsApp button above the basket bar; lock page scroll while the drawer is open.
@@ -177,7 +184,7 @@ export default function MenuBrowser({ menu }: { menu: Menu }) {
           <span className="mn-bar-count">{count}</span>
           <div>
             <strong>{count} item{count === 1 ? "" : "s"} in your basket</strong>
-            <span>{formatRupees(total)}{hasUnpriced ? " + on request" : ""} <small>+ delivery</small></span>
+            <span>{formatRupees(total)}{hasUnpriced ? " + on request" : ""} <small>{toFree !== null ? `· ${formatRupees(toFree)} more for free delivery` : quote.kind === "free" ? "· free delivery" : "+ delivery"}</small></span>
           </div>
         </div>
         <button type="button" className="lp-btn lp-btn--primary" onClick={() => setOpen(true)} tabIndex={count === 0 || open ? -1 : 0}>
@@ -213,16 +220,39 @@ export default function MenuBrowser({ menu }: { menu: Menu }) {
                   ))}
                 </ul>
 
+                {delivery.pickupEnabled && (
+                  <div className="mn-method" role="radiogroup" aria-label="Delivery or pickup">
+                    {(["delivery", "pickup"] as const).map((m) => (
+                      <button key={m} type="button" role="radio" aria-checked={fulfilment === m} className={fulfilment === m ? "is-active" : ""} onClick={() => setMethod(m)}>
+                        <Icon name={m === "delivery" ? "pin" : "gift"} size={18} />
+                        <span><strong>{m === "delivery" ? "Delivery" : "Pickup"}</strong><small>{m === "delivery" ? `Anywhere in ${site.city}` : "Address shared in chat"}</small></span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                <dl className="mn-sum">
+                  <div><dt>Subtotal</dt><dd>{formatRupees(total)}{hasUnpriced && <small> + items on request</small>}</dd></div>
+                  <div><dt>{fulfilment === "pickup" ? "Pickup" : "Delivery"}</dt><dd className={quote.kind === "free" || quote.kind === "pickup" ? "is-free" : ""}>{quote.kind === "pickup" ? "No charge" : quoteLabel(quote)}</dd></div>
+                </dl>
+                {toFree !== null && (
+                  <p className="mn-free-nudge"><Icon name="sparkle" size={16} /><span>Add <strong>{formatRupees(toFree)}</strong> more for <strong>free delivery</strong></span></p>
+                )}
                 <div className="mn-total">
-                  <span>Total<small className="mn-total-note">Excluding delivery charges</small></span>
-                  <strong>{formatRupees(total)}{hasUnpriced && <small> + items on request</small>}</strong>
+                  <span>Total{fee === null && <small className="mn-total-note">Excluding delivery charges</small>}</span>
+                  <strong>{formatRupees(Math.round((total + (fee ?? 0)) * 100) / 100)}{hasUnpriced && <small> + items on request</small>}</strong>
                 </div>
 
                 <div className="mn-details">
                   <label className="field">Your name (optional)
                     <input value={name} onChange={(e) => setName(e.target.value)} maxLength={80} autoComplete="name" />
                   </label>
-                  <label className="field">Note — date &amp; time, pickup or delivery, requests (optional)
+                  {fulfilment === "delivery" && (
+                    <label className="field">Your area in {site.city} (helps us confirm delivery)
+                      <input value={area} onChange={(e) => setArea(e.target.value)} maxLength={120} placeholder="e.g. Patia, Saheed Nagar, Jaydev Vihar" autoComplete="address-level3" />
+                    </label>
+                  )}
+                  <label className="field">Note — date &amp; time, requests (optional)
                     <textarea value={note} onChange={(e) => setNote(e.target.value)} maxLength={500} rows={3} />
                   </label>
                 </div>
@@ -270,7 +300,7 @@ export default function MenuBrowser({ menu }: { menu: Menu }) {
                     <p className="mn-send-hint">WhatsApp fills in your order for you. On Instagram, we copy it — just paste it in the chat.</p>
                   </div>
                 )}
-                <p className="mn-fine">Prices are per the current menu and exclude delivery charges. We’ll confirm availability, delivery and the final total in the chat.</p>
+                <p className="mn-fine">We currently deliver only within {site.city}. Prices are per the current menu; we’ll confirm availability and the final total in the chat.</p>
               </>
             )}
           </aside>

@@ -4,6 +4,7 @@ import { Garland, Marigold } from "../decor";
 import SectionHead from "./SectionHead";
 import ContactForm from "../ContactForm";
 import ReviewQrCard from "./ReviewQrCard";
+import OrderingInfo from "./OrderingInfo";
 import { FeaturedReviews, RatingSummary } from "./LiveReviews";
 import { Suspense } from "react";
 import { faqs, gallery, orderSteps } from "@/content/home";
@@ -27,6 +28,10 @@ export function HowToOrder() {
             </li>
           ))}
         </ol>
+
+        <Suspense fallback={null}>
+          <OrderingInfo />
+        </Suspense>
 
         <div className="lp-wa-panel reveal">
           <div className="lp-wa-panel-img"><Image src={tiramisuTray} alt="" placeholder="blur" sizes="(max-width: 800px) 100vw, 420px" /></div>
@@ -137,7 +142,7 @@ export function Contact() {
           <ul className="lp-contact-list">
             <li>
               <span className="lp-icon-badge"><Icon name="whatsapp" /></span>
-              <div><strong>Orders & chat</strong><span>Order from our menu, or message us on WhatsApp or Instagram — whichever you prefer.</span>
+              <div><strong>Orders & chat</strong><span>Delivery across Bhubaneswar, or pickup. Order from our menu, or message us on WhatsApp or Instagram — whichever you prefer.</span>
                 <ChatLinks size="sm" className="lp-contact-chat" /></div>
             </li>
             <li>
@@ -154,6 +159,7 @@ export function Contact() {
           <h3>Send us a message</h3>
           <p className="lp-muted">Not for orders — for those, use our menu or WhatsApp/Instagram.</p>
           <ContactForm />
+          <p className="lp-form-privacy">We use your details only to reply to you. See our <a href="/privacy">Privacy</a> page.</p>
         </div>
       </div>
     </section>

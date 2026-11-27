@@ -104,3 +104,17 @@ model Review {
 
   @@index([isApproved, createdAt])
 }
+
+/// Delivery & pickup settings edited in /dolceadmin (a single row with id "default").
+model DeliverySettings {
+  id            String   @id @default("default")
+  /// "unset" (confirmed in chat) | "fixed" (one charge for the whole city) | "per_km"
+  chargeMode    String   @default("unset")
+  fixedFee      Decimal? @db.Decimal(10, 2)
+  perKmRate     Decimal? @db.Decimal(10, 2)
+  minimumCharge Decimal? @db.Decimal(10, 2)
+  /// Orders at or above this amount get free delivery (null = no free-delivery offer).
+  freeAbove     Decimal? @db.Decimal(10, 2)
+  pickupEnabled Boolean  @default(true)
+  updatedAt     DateTime @updatedAt
+}

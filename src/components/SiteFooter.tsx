@@ -10,8 +10,9 @@ export default function SiteFooter({ onHome = false }: { onHome?: boolean }) {
       <Tricolore />
       <div className="lp-shell lp-footer-grid">
         <div>
-          <div className="lp-logo lp-logo--light"><span>DOLCE</span><small>Italian Café · India</small></div>
+          <div className="lp-logo lp-logo--light"><span>DOLCE</span><small>Italian Café · Bhubaneswar</small></div>
           <p className="lp-footer-tag">{site.tagline}<br /><span lang="hi" className="lp-hindi">{site.hindiTagline}</span></p>
+          <p className="lp-footer-loc"><Icon name="pin" size={15} /> Delivering across {site.city}, {site.region}</p>
           <PureVegBadge className="veg-badge--dark" />
         </div>
         <nav aria-label="Footer">
@@ -20,6 +21,7 @@ export default function SiteFooter({ onHome = false }: { onHome?: boolean }) {
           <a href={h("tiramisu")}>Signature Tiramisu</a>
           <a href={h("reviews")}>Reviews</a>
           <a href={site.reviewFormUrl} target="_blank" rel="noopener noreferrer">Rate &amp; Review us ↗</a>
+          <a href="/privacy">Privacy</a>
           <a href={h("menu")}>Menu</a>
         </nav>
         <div>
@@ -34,7 +36,7 @@ export default function SiteFooter({ onHome = false }: { onHome?: boolean }) {
         </div>
       </div>
       <div className="lp-shell lp-footer-bottom">
-        <span>© {new Date().getFullYear()} DOLCE. Made with love in India, inspired by Italy.</span>
+        <span>© {new Date().getFullYear()} DOLCE · {site.city}, {site.region}. Made with love in India, inspired by Italy. · <a href="/privacy">Privacy</a></span>
         <span lang="it">Grazie mille ♥</span>
       </div>
     </footer>

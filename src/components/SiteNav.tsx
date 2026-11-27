@@ -62,7 +62,7 @@ export default function SiteNav({ onHome = false }: { onHome?: boolean }) {
       <div className="lp-nav-inner lp-shell">
         <Link href={onHome ? "#home" : "/"} className="lp-logo" onClick={() => setOpen(false)}>
           <span>DOLCE</span>
-          <small>Italian Café · India</small>
+          <small>Italian Café · Bhubaneswar</small>
         </Link>
 
         <nav className={`lp-nav-links${open ? " is-open" : ""}`} aria-label="Main">

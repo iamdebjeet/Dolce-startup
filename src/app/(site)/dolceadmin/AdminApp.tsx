@@ -6,11 +6,13 @@ import MenuAdmin from "./MenuAdmin";
 import CategoriesAdmin from "./CategoriesAdmin";
 import ReviewsAdmin from "./ReviewsAdmin";
 import InquiriesAdmin from "./InquiriesAdmin";
+import DeliveryAdmin from "./DeliveryAdmin";
 
 const TABS = [
   { key: "menu", label: "Menu items" },
   { key: "categories", label: "Categories" },
   { key: "reviews", label: "Reviews" },
+  { key: "delivery", label: "Delivery" },
   { key: "inquiries", label: "Inquiries" },
 ] as const;
 type Tab = (typeof TABS)[number]["key"];
@@ -62,6 +64,7 @@ export default function AdminApp() {
         {tab === "categories" && <CategoriesAdmin onError={onError} />}
         {tab === "reviews" && <ReviewsAdmin onError={onError} />}
         {tab === "inquiries" && <InquiriesAdmin onError={onError} />}
+        {tab === "delivery" && <DeliveryAdmin onError={onError} />}
       </div>
     </div>
   );

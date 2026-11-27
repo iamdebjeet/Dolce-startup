@@ -4,6 +4,7 @@ import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import Reveal from "@/components/Reveal";
 import ChatFab from "@/components/ChatFab";
+import LocalBusinessJsonLd from "@/components/LocalBusinessJsonLd";
 import { Cafe, Fusion, Hero, Marquee, Purpose, Signature, Story } from "@/components/home/TopSections";
 import { Contact, Faq, Gallery, HowToOrder, Reviews } from "@/components/home/BottomSections";
 import MenuSection, { MenuSkeleton } from "@/components/menu/MenuSection";
@@ -14,6 +15,7 @@ export const dynamic = "force-dynamic";
 export default function HomePage() {
   return (
     <>
+      <LocalBusinessJsonLd />
       <SiteNav onHome />
       <main className="lp">
         <Hero />

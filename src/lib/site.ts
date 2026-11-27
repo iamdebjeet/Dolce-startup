@@ -12,6 +12,11 @@ function normaliseWhatsApp(raw: string) {
 export const site = {
   name: "DOLCE",
   tagline: "A Little Taste of Italy",
+  /** Where DOLCE delivers. Used across the page, SEO metadata and the basket. */
+  city: "Bhubaneswar",
+  region: "Odisha",
+  /** Public site address (used for the sitemap, robots.txt and link previews). */
+  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://dolcecafe.netlify.app").replace(/\/+$/, ""),
   hindiTagline: "इटली का एक मीठा स्वाद",
   whatsappNumber: normaliseWhatsApp(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || DEFAULT_WHATSAPP),
   /** Instagram account customers can DM to order or chat. */

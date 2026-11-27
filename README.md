@@ -17,6 +17,17 @@ This is the initial project scaffold based on the requirements discussed so far.
 - **Menu & WhatsApp ordering:** the Menu section shows the categories and items managed in `/dolceadmin` (live, per request). Customers add serving options to a basket (kept in their browser), add an optional name/note, and tap **Send order on WhatsApp**. That opens WhatsApp with the full order pre-written to DOLCE’s number; the customer taps Send. (Websites can’t send WhatsApp messages on a customer’s behalf.)
 - **WhatsApp number:** `NEXT_PUBLIC_WHATSAPP_NUMBER`, defaulting to `8338027212` in `src/lib/site.ts`. 10-digit numbers get `+91` added.
 
+## Delivery & location
+DOLCE currently delivers only within **Bhubaneswar, Odisha** (set in `src/lib/site.ts` as `city`/`region`; also used in page titles, structured data and the basket). Customers can choose **Delivery** or **Pickup** (pickup address is shared in chat).
+
+Delivery charges are edited in **/dolceadmin → Delivery** (no deploy needed):
+- **Not decided yet**: "confirmed in the chat".
+- **Fixed**: one charge for the whole city, added to the basket total.
+- **Per km**: ₹/km with an optional minimum; shown in the basket and confirmed in chat.
+- Optional **free delivery above ₹X**, with an "add ₹N more" nudge in the basket, and a pickup on/off switch.
+
+The privacy page is at `/privacy`; `robots.txt` and `sitemap.xml` are generated (set `NEXT_PUBLIC_SITE_URL` if the site moves to a custom domain).
+
 ## Admin portal
 - `/dolceadmin` — sign in with the single admin account (`ADMIN_EMAIL` / `ADMIN_PASSWORD_HASH`)
 - Create, edit, deactivate and delete categories (deletion is blocked while items use the category)

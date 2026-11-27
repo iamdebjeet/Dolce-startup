@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Great_Vibes, Playfair_Display, Tiro_Devanagari_Hindi } from "next/font/google";
 import "./globals.css";
+import { site } from "@/lib/site";
 
 const display = Playfair_Display({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-display", display: "swap" });
 const sans = DM_Sans({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
@@ -8,12 +9,17 @@ const hindi = Tiro_Devanagari_Hindi({ subsets: ["devanagari", "latin"], weight: 
 const script = Great_Vibes({ subsets: ["latin"], weight: "400", variable: "--font-script", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "DOLCE | A Little Taste of Italy — Pure Veg Italian Café in India",
-  description: "DOLCE is a 100% pure veg Italian café in India. Handmade Classic, Chocolate and High-Protein Tiramisu — order on WhatsApp.",
+  metadataBase: new URL(site.url),
+  title: `DOLCE | Pure Veg Italian Café & Tiramisu in ${site.city}`,
+  description: `DOLCE is a 100% pure veg Italian café in ${site.city}, ${site.region}. Handmade Classic, Chocolate and High-Protein Tiramisu — delivery across ${site.city} or pickup. Order on WhatsApp or Instagram.`,
+  keywords: [`tiramisu ${site.city}`, `Italian desserts ${site.city}`, `pure veg café ${site.city}`, "DOLCE tiramisu"],
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "DOLCE | A Little Taste of Italy",
-    description: "Pure veg Italian café. Handmade Classic, Chocolate and High-Protein Tiramisu. Order on WhatsApp.",
+    title: `DOLCE | A Little Taste of Italy in ${site.city}`,
+    description: `Pure veg Italian café in ${site.city}. Handmade tiramisu — delivery across ${site.city} or pickup.`,
     type: "website",
+    locale: "en_IN",
+    siteName: "DOLCE",
   },
 };
 

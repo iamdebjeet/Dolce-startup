@@ -55,7 +55,8 @@ export const ModelName = {
   MenuItem: 'MenuItem',
   ServingOption: 'ServingOption',
   ContactInquiry: 'ContactInquiry',
-  Review: 'Review'
+  Review: 'Review',
+  DeliverySettings: 'DeliverySettings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -148,6 +149,20 @@ export const ReviewScalarFieldEnum = {
 } as const
 
 export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
+
+
+export const DeliverySettingsScalarFieldEnum = {
+  id: 'id',
+  chargeMode: 'chargeMode',
+  fixedFee: 'fixedFee',
+  perKmRate: 'perKmRate',
+  minimumCharge: 'minimumCharge',
+  freeAbove: 'freeAbove',
+  pickupEnabled: 'pickupEnabled',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DeliverySettingsScalarFieldEnum = (typeof DeliverySettingsScalarFieldEnum)[keyof typeof DeliverySettingsScalarFieldEnum]
 
 
 export const SortOrder = {
