@@ -36,8 +36,16 @@ Temperature enum: `HOT`, `NORMAL`, `CHILLED`.
 
 Image storage is planned for Cloudinary. The database stores the image URL and Cloudinary public ID.
 
-## Reviews
-Planned workflow: Google Forms -> Google Sheets -> backend import/sync -> admin approval -> public reviews page. These are DOLCE testimonials; they are not automatically Google Business Profile reviews.
+## Reviews (Google Form → website)
+Responses to the DOLCE Google Form sync to the site automatically via an Apps Script attached to the form (`scripts/google-form-sync.gs`), which posts them to `POST /api/reviews/import` (auth: `Bearer FORM_WEBHOOK_SECRET`).
+
+- **Average rating** (hero + Reviews section) is computed from **every** response's 1–5 rating.
+- **Featured reviews** are chosen in `/dolceadmin → Reviews → Feature`. Only responses whose customer answered "Yes" to *"May we feature your feedback…?"* and wrote a review can be featured; "No, keep it private" responses count toward the average but their text is never shown (enforced server-side). If a customer later changes to private, their review is unfeatured on the next sync.
+- **Privacy:** the script sends only name, product, rating, review and the permission answer — never age, gender or the "recommend" score. The site stores the first name only ("A DOLCE customer" when anonymous).
+
+**Setup (once):** set `FORM_WEBHOOK_SECRET` in Netlify (24+ random characters) and deploy. Then open the form → ⋮ → **Apps Script**, paste `scripts/google-form-sync.gs`, add Script Properties `SITE_URL` (e.g. `https://dolcecafe.netlify.app`) and `SECRET` (same value as `FORM_WEBHOOK_SECRET`), and run `setup` once. It imports existing responses and turns on automatic sync. Re-running is safe; responses are never duplicated.
+
+These are DOLCE testimonials; they are not Google Business Profile reviews.
 
 ## Technology plan
 - Next.js App Router + TypeScript
@@ -129,6 +137,7 @@ The website and the API are one Next.js app, so one Netlify site serves both. Th
    | `ADMIN_PASSWORD_HASH` | output of `npm run admin:hash -- "a-strong-password"` |
    | `ADMIN_SESSION_SECRET` | 32+ random characters, e.g. `openssl rand -base64 48` |
    | `NEXT_PUBLIC_WHATSAPP_NUMBER` | `8338027212` |
+   | `FORM_WEBHOOK_SECRET` | 24+ random characters; same value as `SECRET` in the Google Form Apps Script |
    | `ADMIN_API_TOKEN` | optional, for scripted admin access |
    | `CLOUDINARY_CLOUD_NAME` / `_API_KEY` / `_API_SECRET` | optional, enables image upload |
 

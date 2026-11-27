@@ -30,7 +30,17 @@ export type MenuItemDTO = {
   servingOptions: ServingOptionDTO[];
 };
 
-export type ReviewDTO = { id: string; name: string; rating: number; text: string; createdAt: string; isApproved?: boolean };
+export type ReviewDTO = {
+  id: string;
+  name: string;
+  rating: number;
+  text: string;
+  product: string | null;
+  consent: "first_name" | "anonymous" | "private";
+  source: "website" | "google_form";
+  createdAt: string;
+  isApproved: boolean;
+};
 
 export type InquiryDTO = {
   id: string;
@@ -117,11 +127,4 @@ export async function getAllCategories(): Promise<CategoryDTO[]> {
   return categories.map(({ _count, ...c }) => ({ ...c, itemCount: _count.menuItems }));
 }
 
-export async function getApprovedReviews() {
-  const reviews = await prisma.review.findMany({
-    where: { isApproved: true },
-    orderBy: { createdAt: "desc" },
-    select: { id: true, name: true, rating: true, text: true, createdAt: true },
-  });
-  return reviews.map((r) => ({ ...r, createdAt: r.createdAt.toISOString() }));
-}
+

@@ -1,8 +1,10 @@
 import Image from "next/image";
-import { Icon, Stars } from "../icons";
+import { Icon } from "../icons";
 import { Garland, Mandala, PureVegBadge, VegMark } from "../decor";
 import SectionHead from "./SectionHead";
-import { marqueeWords, purpose, reviews, signatureItems, values } from "@/content/home";
+import { marqueeWords, purpose, signatureItems, values } from "@/content/home";
+import { HeroRatingCard, HeroRatingFact } from "./LiveReviews";
+import { Suspense } from "react";
 import { whatsappLink } from "@/lib/site";
 
 import heroImg from "@/assets/images/tiramisu-slice.jpg";
@@ -15,7 +17,6 @@ import spices from "@/assets/images/spices.jpg";
 import cafe1 from "@/assets/images/cafe-1.jpg";
 import cappuccino from "@/assets/images/cappuccino.jpg";
 
-const avgRating = reviews.reduce((s, r) => s + r.rating, 0) / reviews.length;
 
 export function Hero() {
   return (
@@ -45,7 +46,7 @@ export function Hero() {
           <ul className="lp-hero-facts reveal" style={{ "--d": "320ms" } as React.CSSProperties}>
             <li><strong>3</strong><span>signature <br />tiramisus</span></li>
             <li><strong className="lp-fact-veg"><VegMark size={22} label="" />100%</strong><span>pure <br />veg</span></li>
-            <li><strong>{avgRating.toFixed(1)}★</strong><span>customer <br />love</span></li>
+            <Suspense fallback={null}><HeroRatingFact /></Suspense>
           </ul>
         </div>
 
@@ -60,11 +61,7 @@ export function Hero() {
           <div className="lp-hero-coffee lp-float lp-float--slow">
             <Image src={cappuccino2} alt="" placeholder="blur" sizes="170px" />
           </div>
-          <div className="lp-hero-card lp-hero-card--rating">
-            <Stars rating={avgRating} size={14} />
-            <strong>{avgRating.toFixed(1)} / 5</strong>
-            <span>from happy customers</span>
-          </div>
+          <Suspense fallback={null}><HeroRatingCard /></Suspense>
           <div className="lp-hero-card lp-hero-card--wa">
             <span className="lp-hero-card-icon"><Icon name="whatsapp" size={20} /></span>
             <span><strong>Order in a tap</strong><br />on WhatsApp or Instagram</span>

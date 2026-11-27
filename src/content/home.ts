@@ -107,18 +107,6 @@ export const orderSteps: { title: string; text: string; icon: IconName }[] = [
   { title: "Enjoy your dolce", text: "Fresh, chilled and ready to make someone’s day a little sweeter.", icon: "heart" },
 ];
 
-/**
- * Sample testimonials for layout purposes. Replace these with real customer reviews before launch —
- * publishing invented reviews as genuine is misleading to customers.
- */
-export const reviews: { name: string; rating: number; text: string; item: string }[] = [
-  { name: "Priya S.", rating: 5, item: "Classic Tiramisu", text: "The closest thing to the tiramisu I had in Rome. Light, creamy, and the coffee comes through beautifully." },
-  { name: "Arjun M.", rating: 5, item: "High-Protein Tiramisu", text: "Finally a dessert that fits my routine and still feels like a treat. It’s become my post-gym reward." },
-  { name: "Neha & Rohan", rating: 5, item: "Chocolate Tiramisu", text: "Ordered it for our anniversary — rich, not too sweet, and gone in ten minutes flat." },
-  { name: "Farhan K.", rating: 4, item: "Classic Tiramisu", text: "Ordering on WhatsApp was so easy and they replied quickly. Delicious — I just wish I’d ordered a bigger box!" },
-  { name: "Ananya R.", rating: 5, item: "Chocolate Tiramisu", text: "Beautifully packed and tasted even better than it looked. My whole family asked where I got it." },
-  { name: "Vikram T.", rating: 5, item: "All three flavours", text: "Got all three for our Diwali get-together. The classic was the first to disappear. Grazie, DOLCE!" },
-];
 
 export const faqs: { q: string; a: string }[] = [
   { q: "Is DOLCE pure vegetarian?", a: "Yes! DOLCE is a 100% pure vegetarian café. Everything on our menu — every tiramisu, dessert and drink — is vegetarian, so the whole family can order with confidence." },

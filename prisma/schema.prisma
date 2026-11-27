@@ -85,9 +85,19 @@ model ContactInquiry {
 
 model Review {
   id         String   @id @default(uuid())
+  /// Display name: first name only, or "A DOLCE customer" when the customer asked to stay anonymous.
   name       String
   rating     Int
-  text       String   @db.Text
+  text       String   @default("") @db.Text
+  /// Product the customer liked (from the Google Form).
+  product    String?
+  /// Customer permission to show this review: "first_name" | "anonymous" | "private".
+  consent    String   @default("first_name")
+  /// Where the review came from: "website" | "google_form".
+  source     String   @default("website")
+  /// Google Form response id, used to avoid importing the same response twice.
+  externalId String?  @unique
+  /// "Featured" on the website (chosen by the admin). Only allowed when consent is not "private".
   isApproved Boolean  @default(false)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt

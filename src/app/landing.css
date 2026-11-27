@@ -589,3 +589,10 @@ html.js .reveal.is-in .rq-stars span { animation: rq-star .55s cubic-bezier(.2,1
 .lp-fab-menu[hidden] { display: none; }
 
 .lp-contact .lp-chat-links .lp-btn, .lp-footer .lp-chat-links .lp-btn { box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .28), 0 10px 22px -14px rgba(0, 0, 0, .6); }
+
+/* Live rating summary states */
+.rv-score--empty { display: flex; align-items: center; gap: 14px; grid-template-columns: none; color: var(--cocoa); font: 15px/1.6 var(--sans); }
+.rv-score--empty svg { color: var(--saffron); flex: none; }
+.rv-score--empty p { margin: 0; }
+.rv-score--loading { min-height: 132px; background: linear-gradient(100deg, var(--blush) 30%, #fbefe2 50%, var(--blush) 70%) 0 0 / 300% 100%; animation: mn-shimmer 1.4s linear infinite; border: 0; }
+.lp-avatar svg { color: #fff; }

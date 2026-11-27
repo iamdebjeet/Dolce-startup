@@ -1,10 +1,12 @@
 import Image from "next/image";
-import { Icon, Stars } from "../icons";
+import { Icon } from "../icons";
 import { Garland, Marigold } from "../decor";
 import SectionHead from "./SectionHead";
 import ContactForm from "../ContactForm";
 import ReviewQrCard from "./ReviewQrCard";
-import { faqs, gallery, orderSteps, reviews } from "@/content/home";
+import { FeaturedReviews, RatingSummary } from "./LiveReviews";
+import { Suspense } from "react";
+import { faqs, gallery, orderSteps } from "@/content/home";
 import { site } from "@/lib/site";
 import ChatLinks from "../ChatLinks";
 import tiramisuTray from "@/assets/images/tiramisu-tray.jpg";
@@ -68,8 +70,6 @@ export function Gallery() {
 }
 
 export function Reviews() {
-  const avg = reviews.reduce((s, r) => s + r.rating, 0) / reviews.length;
-  const counts = [5, 4, 3, 2, 1].map((n) => ({ n, c: reviews.filter((r) => r.rating === n).length }));
   return (
     <section id="reviews" className="lp-section lp-reviews">
       <div className="lp-shell">
@@ -92,39 +92,16 @@ export function Reviews() {
             </a>
             <p className="rv-note">On your phone? Just tap the button — it opens our review form.</p>
 
-            <div className="rv-score">
-              <div className="rv-score-num">
-                <strong>{avg.toFixed(1)}</strong>
-                <Stars rating={avg} size={18} />
-                <span>{reviews.length} reviews</span>
-              </div>
-              <ul>
-                {counts.map(({ n, c }) => (
-                  <li key={n}>
-                    <span>{n}★</span>
-                    <span className="lp-bar"><span style={{ width: `${(c / reviews.length) * 100}%` }} /></span>
-                    <span>{c}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <Suspense fallback={<div className="rv-score rv-score--loading" aria-hidden="true" />}>
+              <RatingSummary />
+            </Suspense>
           </div>
         </div>
 
         <div className="lp-reviews-layout">
-          <div className="lp-review-grid">
-            {reviews.map((r, i) => (
-              <article key={r.name} className="lp-review reveal" style={{ "--d": `${(i % 3) * 100}ms` } as React.CSSProperties}>
-                <Icon name="quote" size={26} className="lp-review-quote" />
-                <Stars rating={r.rating} />
-                <p>{r.text}</p>
-                <footer>
-                  <span className="lp-avatar" aria-hidden="true">{r.name.split(/\s+/).filter((p) => /^\p{L}/u.test(p)).map((p) => p[0]).slice(0, 2).join("")}</span>
-                  <span><strong>{r.name}</strong><small>{r.item}</small></span>
-                </footer>
-              </article>
-            ))}
-          </div>
+          <Suspense fallback={null}>
+            <FeaturedReviews />
+          </Suspense>
         </div>
       </div>
     </section>

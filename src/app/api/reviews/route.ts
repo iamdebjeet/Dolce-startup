@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { jsonError, rateLimit, readJson } from "@/lib/api";
-import { getApprovedReviews } from "@/lib/data";
+import { displayName, getFeaturedReviews, getReviewStats } from "@/lib/reviews";
 
 export async function GET() {
   try {
-    return NextResponse.json(await getApprovedReviews());
+    const [stats, featured] = await Promise.all([getReviewStats(), getFeaturedReviews(50)]);
+    return NextResponse.json({ stats, featured });
   } catch {
     return jsonError("Reviews are temporarily unavailable.", 503);
   }
@@ -20,7 +21,7 @@ export async function POST(request: Request) {
   }
   if (body.name.length > 100 || body.text.length > 2000) return jsonError("Name or review text is too long.", 400);
   try {
-    const review = await prisma.review.create({ data: { name: body.name.trim(), text: body.text.trim(), rating: Number(body.rating) } });
+    const review = await prisma.review.create({ data: { name: displayName(body.name, "first_name"), text: body.text.trim(), rating: Number(body.rating), source: "website" } });
     return NextResponse.json({ id: review.id, message: "Thanks. Your review was submitted for approval." }, { status: 201 });
   } catch {
     return jsonError("Could not submit your review. Please try again later.", 503);

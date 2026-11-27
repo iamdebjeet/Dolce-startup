@@ -39,6 +39,10 @@ export type ReviewMinAggregateOutputType = {
   name: string | null
   rating: number | null
   text: string | null
+  product: string | null
+  consent: string | null
+  source: string | null
+  externalId: string | null
   isApproved: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -49,6 +53,10 @@ export type ReviewMaxAggregateOutputType = {
   name: string | null
   rating: number | null
   text: string | null
+  product: string | null
+  consent: string | null
+  source: string | null
+  externalId: string | null
   isApproved: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -59,6 +67,10 @@ export type ReviewCountAggregateOutputType = {
   name: number
   rating: number
   text: number
+  product: number
+  consent: number
+  source: number
+  externalId: number
   isApproved: number
   createdAt: number
   updatedAt: number
@@ -79,6 +91,10 @@ export type ReviewMinAggregateInputType = {
   name?: true
   rating?: true
   text?: true
+  product?: true
+  consent?: true
+  source?: true
+  externalId?: true
   isApproved?: true
   createdAt?: true
   updatedAt?: true
@@ -89,6 +105,10 @@ export type ReviewMaxAggregateInputType = {
   name?: true
   rating?: true
   text?: true
+  product?: true
+  consent?: true
+  source?: true
+  externalId?: true
   isApproved?: true
   createdAt?: true
   updatedAt?: true
@@ -99,6 +119,10 @@ export type ReviewCountAggregateInputType = {
   name?: true
   rating?: true
   text?: true
+  product?: true
+  consent?: true
+  source?: true
+  externalId?: true
   isApproved?: true
   createdAt?: true
   updatedAt?: true
@@ -196,6 +220,10 @@ export type ReviewGroupByOutputType = {
   name: string
   rating: number
   text: string
+  product: string | null
+  consent: string
+  source: string
+  externalId: string | null
   isApproved: boolean
   createdAt: Date
   updatedAt: Date
@@ -229,6 +257,10 @@ export type ReviewWhereInput = {
   name?: Prisma.StringFilter<"Review"> | string
   rating?: Prisma.IntFilter<"Review"> | number
   text?: Prisma.StringFilter<"Review"> | string
+  product?: Prisma.StringNullableFilter<"Review"> | string | null
+  consent?: Prisma.StringFilter<"Review"> | string
+  source?: Prisma.StringFilter<"Review"> | string
+  externalId?: Prisma.StringNullableFilter<"Review"> | string | null
   isApproved?: Prisma.BoolFilter<"Review"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Review"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Review"> | Date | string
@@ -239,6 +271,10 @@ export type ReviewOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   rating?: Prisma.SortOrder
   text?: Prisma.SortOrder
+  product?: Prisma.SortOrderInput | Prisma.SortOrder
+  consent?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  externalId?: Prisma.SortOrderInput | Prisma.SortOrder
   isApproved?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -246,22 +282,30 @@ export type ReviewOrderByWithRelationInput = {
 
 export type ReviewWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  externalId?: string
   AND?: Prisma.ReviewWhereInput | Prisma.ReviewWhereInput[]
   OR?: Prisma.ReviewWhereInput[]
   NOT?: Prisma.ReviewWhereInput | Prisma.ReviewWhereInput[]
   name?: Prisma.StringFilter<"Review"> | string
   rating?: Prisma.IntFilter<"Review"> | number
   text?: Prisma.StringFilter<"Review"> | string
+  product?: Prisma.StringNullableFilter<"Review"> | string | null
+  consent?: Prisma.StringFilter<"Review"> | string
+  source?: Prisma.StringFilter<"Review"> | string
   isApproved?: Prisma.BoolFilter<"Review"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Review"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Review"> | Date | string
-}, "id">
+}, "id" | "externalId">
 
 export type ReviewOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   rating?: Prisma.SortOrder
   text?: Prisma.SortOrder
+  product?: Prisma.SortOrderInput | Prisma.SortOrder
+  consent?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  externalId?: Prisma.SortOrderInput | Prisma.SortOrder
   isApproved?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -280,6 +324,10 @@ export type ReviewScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Review"> | string
   rating?: Prisma.IntWithAggregatesFilter<"Review"> | number
   text?: Prisma.StringWithAggregatesFilter<"Review"> | string
+  product?: Prisma.StringNullableWithAggregatesFilter<"Review"> | string | null
+  consent?: Prisma.StringWithAggregatesFilter<"Review"> | string
+  source?: Prisma.StringWithAggregatesFilter<"Review"> | string
+  externalId?: Prisma.StringNullableWithAggregatesFilter<"Review"> | string | null
   isApproved?: Prisma.BoolWithAggregatesFilter<"Review"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Review"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Review"> | Date | string
@@ -289,7 +337,11 @@ export type ReviewCreateInput = {
   id?: string
   name: string
   rating: number
-  text: string
+  text?: string
+  product?: string | null
+  consent?: string
+  source?: string
+  externalId?: string | null
   isApproved?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -299,7 +351,11 @@ export type ReviewUncheckedCreateInput = {
   id?: string
   name: string
   rating: number
-  text: string
+  text?: string
+  product?: string | null
+  consent?: string
+  source?: string
+  externalId?: string | null
   isApproved?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -310,6 +366,10 @@ export type ReviewUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
   text?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consent?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -320,6 +380,10 @@ export type ReviewUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
   text?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consent?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -329,7 +393,11 @@ export type ReviewCreateManyInput = {
   id?: string
   name: string
   rating: number
-  text: string
+  text?: string
+  product?: string | null
+  consent?: string
+  source?: string
+  externalId?: string | null
   isApproved?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -340,6 +408,10 @@ export type ReviewUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
   text?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consent?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -350,6 +422,10 @@ export type ReviewUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.IntFieldUpdateOperationsInput | number
   text?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consent?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -360,6 +436,10 @@ export type ReviewCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   rating?: Prisma.SortOrder
   text?: Prisma.SortOrder
+  product?: Prisma.SortOrder
+  consent?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  externalId?: Prisma.SortOrder
   isApproved?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -374,6 +454,10 @@ export type ReviewMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   rating?: Prisma.SortOrder
   text?: Prisma.SortOrder
+  product?: Prisma.SortOrder
+  consent?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  externalId?: Prisma.SortOrder
   isApproved?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -384,6 +468,10 @@ export type ReviewMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   rating?: Prisma.SortOrder
   text?: Prisma.SortOrder
+  product?: Prisma.SortOrder
+  consent?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  externalId?: Prisma.SortOrder
   isApproved?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -400,6 +488,10 @@ export type ReviewSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name?: boolean
   rating?: boolean
   text?: boolean
+  product?: boolean
+  consent?: boolean
+  source?: boolean
+  externalId?: boolean
   isApproved?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -410,6 +502,10 @@ export type ReviewSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   name?: boolean
   rating?: boolean
   text?: boolean
+  product?: boolean
+  consent?: boolean
+  source?: boolean
+  externalId?: boolean
   isApproved?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -420,6 +516,10 @@ export type ReviewSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   name?: boolean
   rating?: boolean
   text?: boolean
+  product?: boolean
+  consent?: boolean
+  source?: boolean
+  externalId?: boolean
   isApproved?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -430,21 +530,47 @@ export type ReviewSelectScalar = {
   name?: boolean
   rating?: boolean
   text?: boolean
+  product?: boolean
+  consent?: boolean
+  source?: boolean
+  externalId?: boolean
   isApproved?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ReviewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "rating" | "text" | "isApproved" | "createdAt" | "updatedAt", ExtArgs["result"]["review"]>
+export type ReviewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "rating" | "text" | "product" | "consent" | "source" | "externalId" | "isApproved" | "createdAt" | "updatedAt", ExtArgs["result"]["review"]>
 
 export type $ReviewPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Review"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    /**
+     * Display name: first name only, or "A DOLCE customer" when the customer asked to stay anonymous.
+     */
     name: string
     rating: number
     text: string
+    /**
+     * Product the customer liked (from the Google Form).
+     */
+    product: string | null
+    /**
+     * Customer permission to show this review: "first_name" | "anonymous" | "private".
+     */
+    consent: string
+    /**
+     * Where the review came from: "website" | "google_form".
+     */
+    source: string
+    /**
+     * Google Form response id, used to avoid importing the same response twice.
+     */
+    externalId: string | null
+    /**
+     * "Featured" on the website (chosen by the admin). Only allowed when consent is not "private".
+     */
     isApproved: boolean
     createdAt: Date
     updatedAt: Date
@@ -875,6 +1001,10 @@ export interface ReviewFieldRefs {
   readonly name: Prisma.FieldRef<"Review", 'String'>
   readonly rating: Prisma.FieldRef<"Review", 'Int'>
   readonly text: Prisma.FieldRef<"Review", 'String'>
+  readonly product: Prisma.FieldRef<"Review", 'String'>
+  readonly consent: Prisma.FieldRef<"Review", 'String'>
+  readonly source: Prisma.FieldRef<"Review", 'String'>
+  readonly externalId: Prisma.FieldRef<"Review", 'String'>
   readonly isApproved: Prisma.FieldRef<"Review", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Review", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Review", 'DateTime'>
