@@ -321,8 +321,8 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
 .lp-contact-list li { display: flex; gap: 16px; align-items: flex-start; }
 .lp-contact-list .lp-icon-badge { background: rgba(242, 193, 78, .15); color: var(--haldi); box-shadow: inset 0 0 0 1px rgba(242,193,78,.35); }
 .lp-contact-list strong { display: block; font: 600 16px var(--sans); margin-bottom: 3px; }
-.lp-contact-list div > span { display: block; font: 14.5px/1.6 var(--sans); color: rgba(255,251,243,.78); }
-.lp-contact-list a { display: inline-block; margin-top: 6px; color: var(--haldi); font: 600 14px var(--sans); }
+.lp-contact-list div > span:not(.lp-chat-links) { display: block; font: 14.5px/1.6 var(--sans); color: rgba(255,251,243,.78); }
+.lp-contact-list a:not(.lp-btn) { display: inline-block; margin-top: 6px; color: var(--haldi); font: 600 14px var(--sans); }
 .lp-contact-card { background: var(--ivory); color: var(--espresso); border-radius: 26px; padding: clamp(24px, 4vw, 38px); box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
 .lp-contact-card h3 { font: 500 28px var(--display); color: var(--vino); margin: 0 0 4px; }
 .lp-contact-card .lp-muted { font: 14px var(--sans); margin: 0 0 22px; }
@@ -549,31 +549,30 @@ html.js .reveal.is-in .rq-stars span { animation: rq-star .55s cubic-bezier(.2,1
 @media (max-width: 900px) { .lp-hero-badges { justify-content: center; } }
 
 /* ---------- WhatsApp + Instagram ordering/chat ---------- */
-.lp-btn--ig { background: linear-gradient(90deg, #d62976, #962fbf); color: #fff; box-shadow: 0 10px 22px -12px #962fbf; }
-.lp-btn--ig:hover { background: linear-gradient(90deg, #c01e66, #7f22a8); }
+.lp-btn--ig { background: linear-gradient(90deg, #c4452a, #c0306a); color: #fff; box-shadow: 0 10px 22px -12px #c0306a; }
+.lp-btn--ig:hover { background: linear-gradient(90deg, #a93a23, #a8285c); }
 .lp-btn--light { background: #fff; color: #0f4d2b; }
 .lp-btn--light:hover { background: var(--haldi); }
 .lp-chat-links { display: inline-flex; flex-wrap: wrap; gap: 10px; }
 
 /* Floating chat button + menu */
 .lp-fab-wrap { position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 60; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; transition: bottom .3s; }
-.lp-fab { background: linear-gradient(135deg, var(--wa) 0 50%, #b12a8a 50%); }
+.lp-fab { background: linear-gradient(135deg, var(--wa) 0 50%, #c0306a 50%); }
 .lp-fab-wrap.is-open .lp-fab { background: var(--espresso); }
 .lp-fab-wrap.is-open .lp-fab::before { animation: none; opacity: 0; }
-.lp-fab::before { background: #6a3b8f; }
+.lp-fab::before { background: #c0306a; }
 .lp-fab-menu { display: grid; gap: 8px; width: 220px; padding: 14px; border-radius: 20px; background: var(--ivory); box-shadow: 0 20px 44px -16px rgba(42, 25, 18, .55); border: 1px solid var(--line); animation: mn-pop .2s ease; transform-origin: bottom right; }
 .lp-fab-menu p { margin: 0 0 2px; font: 600 12px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 .lp-fab-opt { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 14px; color: #fff; font: 600 15px var(--sans); transition: transform .2s; }
 .lp-fab-opt:hover { transform: translateX(-3px); }
 .lp-fab-opt--wa { background: var(--wa); }
-.lp-fab-opt--ig { background: linear-gradient(90deg, #d62976, #962fbf); }
+.lp-fab-opt--ig { background: linear-gradient(90deg, #c4452a, #c0306a); }
 
 /* How-to-order panel, contact, footer */
 .lp-wa-panel-chat { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 18px 0 14px; font: 600 14px var(--sans); color: rgba(255,255,255,.85); }
 .lp-wa-panel .lp-wa-panel-chat .lp-btn--wa { background: rgba(255,255,255,.14); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.55); color: #fff; }
 .lp-wa-panel .lp-wa-panel-chat .lp-btn--wa:hover { background: rgba(255,255,255,.24); }
-.lp-contact-chat { margin-top: 10px; }
-.lp-contact-list .lp-contact-chat a { margin-top: 0; color: #fff; }
+.lp-contact-chat { margin-top: 12px; }
 .lp-footer-chat { margin: 18px 0 8px !important; font-size: 13px; }
 .lp-footer-ig { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; color: var(--haldi); font-weight: 600; }
 .lp-footer-ig:hover { color: #fff; }
@@ -588,3 +587,5 @@ html.js .reveal.is-in .rq-stars span { animation: rq-star .55s cubic-bezier(.2,1
 .mn-total-note { font: 500 12px var(--sans); color: var(--muted); }
 .mn-bar-info small { font-size: 11px; opacity: .8; }
 .lp-fab-menu[hidden] { display: none; }
+
+.lp-contact .lp-chat-links .lp-btn, .lp-footer .lp-chat-links .lp-btn { box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .28), 0 10px 22px -14px rgba(0, 0, 0, .6); }
