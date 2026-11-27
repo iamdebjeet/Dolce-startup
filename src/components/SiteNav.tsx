@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Icon } from "./icons";
-import { whatsappLink } from "@/lib/site";
 
 const LINKS = [
   { id: "story", label: "Our Story" },
@@ -72,8 +71,8 @@ export default function SiteNav({ onHome = false }: { onHome?: boolean }) {
               {l.label}
             </a>
           ))}
-          <a className="lp-btn lp-btn--wa lp-nav-cta" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
-            <Icon name="whatsapp" size={18} /> Order Now
+          <a className="lp-btn lp-btn--primary lp-nav-cta" href={href("menu")} onClick={() => setOpen(false)}>
+            Order Now <Icon name="arrow" size={18} />
           </a>
         </nav>
 

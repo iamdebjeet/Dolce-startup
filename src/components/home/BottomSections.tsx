@@ -5,7 +5,8 @@ import SectionHead from "./SectionHead";
 import ContactForm from "../ContactForm";
 import ReviewQrCard from "./ReviewQrCard";
 import { faqs, gallery, orderSteps, reviews } from "@/content/home";
-import { site, whatsappLink } from "@/lib/site";
+import { site } from "@/lib/site";
+import ChatLinks from "../ChatLinks";
 import tiramisuTray from "@/assets/images/tiramisu-tray.jpg";
 
 export function HowToOrder() {
@@ -13,7 +14,7 @@ export function HowToOrder() {
     <section id="order" className="lp-section lp-order">
       <div className="lp-shell">
         <SectionHead center eyebrow="How to order" title={<>Three steps to something <em>sweet</em></>} hindi="ऑर्डर करना बहुत आसान है"
-          intro="We currently take orders on WhatsApp only — no apps, no sign-ups. Just say ciao!" />
+          intro="Order from our menu and send it to us on WhatsApp or Instagram — no apps, no sign-ups. Just say ciao!" />
         <ol className="lp-steps">
           {orderSteps.map((s, i) => (
             <li key={s.title} className="lp-step reveal" style={{ "--d": `${i * 120}ms` } as React.CSSProperties}>
@@ -29,14 +30,18 @@ export function HowToOrder() {
           <div className="lp-wa-panel-img"><Image src={tiramisuTray} alt="" placeholder="blur" sizes="(max-width: 800px) 100vw, 420px" /></div>
           <div className="lp-wa-panel-body">
             <p className="lp-eyebrow lp-eyebrow--light"><Marigold /> Orders open</p>
-            <h3>Craving tiramisu? We’re one message away.</h3>
-            <p>Tell us your flavour, quantity and when you need it. For parties and festivals, message us a little in advance.</p>
+            <h3>Craving tiramisu? Your order is a few taps away.</h3>
+            <p>Pick from the menu and send your order in one go. Planning a party or festival, or have a question? Chat with us on WhatsApp or Instagram.</p>
             <div className="lp-wa-panel-actions">
-              <a className="lp-btn lp-btn--wa lp-btn--lg" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
-                <Icon name="whatsapp" /> Chat on WhatsApp
+              <a className="lp-btn lp-btn--light lp-btn--lg" href="#menu">
+                Order from the menu <Icon name="arrow" size={18} />
               </a>
-              <span className="lp-wa-note"><Icon name="clock" size={16} /> We reply as quickly as we can</span>
             </div>
+            <div className="lp-wa-panel-chat">
+              <span>Or chat with us:</span>
+              <ChatLinks size="sm" />
+            </div>
+            <span className="lp-wa-note"><Icon name="clock" size={16} /> We reply as quickly as we can</span>
           </div>
         </div>
       </div>
@@ -131,7 +136,7 @@ export function Faq() {
     <section id="faq" className="lp-section lp-faq">
       <div className="lp-shell lp-faq-grid">
         <SectionHead eyebrow="FAQ" title={<>Good <em>questions</em></>} hindi="आपके सवाल, हमारे जवाब"
-          intro="Can’t find what you’re looking for? Just ask us on WhatsApp." />
+          intro="Can’t find what you’re looking for? Just ask us on WhatsApp or Instagram." />
         <div className="lp-faq-list">
           {faqs.map((f, i) => (
             <details key={f.q} className="lp-faq-item reveal" style={{ "--d": `${i * 70}ms` } as React.CSSProperties} open={i === 0}>
@@ -155,8 +160,8 @@ export function Contact() {
           <ul className="lp-contact-list">
             <li>
               <span className="lp-icon-badge"><Icon name="whatsapp" /></span>
-              <div><strong>Orders</strong><span>WhatsApp only — the fastest way to reach us.</span>
-                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer">Start a chat →</a></div>
+              <div><strong>Orders & chat</strong><span>Order from our menu, or message us on WhatsApp or Instagram — whichever you prefer.</span>
+                <ChatLinks size="sm" className="lp-contact-chat" /></div>
             </li>
             <li>
               <span className="lp-icon-badge"><Icon name="gift" /></span>
@@ -170,7 +175,7 @@ export function Contact() {
         </div>
         <div className="lp-contact-card reveal" style={{ "--d": "120ms" } as React.CSSProperties}>
           <h3>Send us a message</h3>
-          <p className="lp-muted">Not for orders — for those, WhatsApp is quickest.</p>
+          <p className="lp-muted">Not for orders — for those, use our menu or WhatsApp/Instagram.</p>
           <ContactForm />
         </div>
       </div>

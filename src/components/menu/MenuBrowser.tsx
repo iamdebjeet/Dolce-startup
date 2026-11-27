@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { getPublicMenu, MenuItemDTO } from "@/lib/data";
 import { basketKey, useBasket } from "@/lib/basket";
 import { buildOrderMessage, formatRupees, orderTotals, type OrderLine } from "@/lib/order";
-import { whatsappLink } from "@/lib/site";
+import { instagramDmUrl, whatsappLink } from "@/lib/site";
 import { Icon } from "../icons";
 import { VegMark } from "../decor";
 
@@ -43,8 +43,29 @@ export default function MenuBrowser({ menu }: { menu: Menu }) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [note, setNote] = useState("");
-  const [sent, setSent] = useState(false);
+  const [sent, setSent] = useState<null | "whatsapp" | "instagram">(null);
+  const [copied, setCopied] = useState<boolean | null>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+
+  /** Instagram can't pre-fill DMs, so copy the order for the customer to paste into the chat. */
+  async function copyOrder() {
+    try {
+      await navigator.clipboard.writeText(message);
+      setCopied(true);
+    } catch {
+      // Older browsers / blocked clipboard: fall back to a hidden textarea.
+      const ta = document.createElement("textarea");
+      ta.value = message;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand("copy");
+      ta.remove();
+      setCopied(ok);
+    }
+  }
 
   // Every orderable entry, keyed like the basket. Stale basket keys (item removed by admin) are simply ignored.
   const entries = useMemo(() => {
@@ -82,7 +103,8 @@ export default function MenuBrowser({ menu }: { menu: Menu }) {
 
   function closeDrawer() {
     setOpen(false);
-    setSent(false);
+    setSent(null);
+    setCopied(null);
   }
 
   return (
@@ -155,11 +177,11 @@ export default function MenuBrowser({ menu }: { menu: Menu }) {
           <span className="mn-bar-count">{count}</span>
           <div>
             <strong>{count} item{count === 1 ? "" : "s"} in your basket</strong>
-            <span>{formatRupees(total)}{hasUnpriced ? " + on request" : ""}</span>
+            <span>{formatRupees(total)}{hasUnpriced ? " + on request" : ""} <small>+ delivery</small></span>
           </div>
         </div>
-        <button type="button" className="lp-btn lp-btn--wa" onClick={() => setOpen(true)} tabIndex={count === 0 || open ? -1 : 0}>
-          <Icon name="whatsapp" size={18} /> Order Now
+        <button type="button" className="lp-btn lp-btn--primary" onClick={() => setOpen(true)} tabIndex={count === 0 || open ? -1 : 0}>
+          Order Now <Icon name="arrow" size={18} />
         </button>
       </div>
 
@@ -192,7 +214,7 @@ export default function MenuBrowser({ menu }: { menu: Menu }) {
                 </ul>
 
                 <div className="mn-total">
-                  <span>Total</span>
+                  <span>Total<small className="mn-total-note">Excluding delivery charges</small></span>
                   <strong>{formatRupees(total)}{hasUnpriced && <small> + items on request</small>}</strong>
                 </div>
 
@@ -205,12 +227,12 @@ export default function MenuBrowser({ menu }: { menu: Menu }) {
                   </label>
                 </div>
 
-                <details className="mn-preview">
-                  <summary>Preview WhatsApp message</summary>
+                <details className="mn-preview" open={copied === false}>
+                  <summary>Preview your order message</summary>
                   <pre>{message}</pre>
                 </details>
 
-                {sent ? (
+                {sent === "whatsapp" && (
                   <div className="mn-sent" role="status">
                     <p><Icon name="check" size={18} /><span>WhatsApp opened with your order — just tap <strong>Send</strong> there.</span></p>
                     <div className="mn-sent-actions">
@@ -218,13 +240,37 @@ export default function MenuBrowser({ menu }: { menu: Menu }) {
                       <button type="button" className="lp-btn lp-btn--ghost lp-btn--sm" onClick={() => { clear(); setNote(""); closeDrawer(); }}>Done — clear basket</button>
                     </div>
                   </div>
-                ) : (
-                  <a className="lp-btn lp-btn--wa lp-btn--lg lp-btn--block" href={whatsappLink(message)} target="_blank" rel="noopener noreferrer"
-                    onClick={() => setSent(true)}>
-                    <Icon name="whatsapp" /> Send order on WhatsApp
-                  </a>
                 )}
-                <p className="mn-fine">Prices are per the current menu. We’ll confirm availability and the final total on WhatsApp.</p>
+                {sent === "instagram" && (
+                  <div className="mn-sent mn-sent--ig" role="status">
+                    {copied ? (
+                      <p><Icon name="check" size={18} /><span>Order copied! In the Instagram chat, <strong>paste</strong> it (long-press → Paste) and tap <strong>Send</strong>.</span></p>
+                    ) : (
+                      <p><Icon name="instagram" size={18} /><span>Couldn’t copy automatically — copy the message from the preview above and paste it in the Instagram chat.</span></p>
+                    )}
+                    <div className="mn-sent-actions">
+                      <button type="button" className="lp-link mn-linkbtn" onClick={copyOrder}>Copy order again</button>
+                      <a className="lp-link" href={instagramDmUrl} target="_blank" rel="noopener noreferrer">Open Instagram again</a>
+                      <button type="button" className="lp-btn lp-btn--ghost lp-btn--sm" onClick={() => { clear(); setNote(""); closeDrawer(); }}>Done — clear basket</button>
+                    </div>
+                  </div>
+                )}
+
+                {!sent && (
+                  <div className="mn-send">
+                    <p className="mn-send-label">Send your order on</p>
+                    <a className="lp-btn lp-btn--wa lp-btn--lg lp-btn--block" href={whatsappLink(message)} target="_blank" rel="noopener noreferrer"
+                      onClick={() => setSent("whatsapp")}>
+                      <Icon name="whatsapp" /> WhatsApp
+                    </a>
+                    <a className="lp-btn lp-btn--ig lp-btn--lg lp-btn--block" href={instagramDmUrl} target="_blank" rel="noopener noreferrer"
+                      onClick={() => { void copyOrder(); setSent("instagram"); }}>
+                      <Icon name="instagram" /> Instagram
+                    </a>
+                    <p className="mn-send-hint">WhatsApp fills in your order for you. On Instagram, we copy it — just paste it in the chat.</p>
+                  </div>
+                )}
+                <p className="mn-fine">Prices are per the current menu and exclude delivery charges. We’ll confirm availability, delivery and the final total in the chat.</p>
               </>
             )}
           </aside>

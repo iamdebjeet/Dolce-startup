@@ -31,7 +31,7 @@ export function buildOrderMessage(lines: OrderLine[], details: { name?: string; 
     ...rows,
     "",
     `Items: ${count}`,
-    `Total: ${formatRupees(total)}${hasUnpriced ? " + items priced on request" : ""}`,
+    `Total: ${formatRupees(total)}${hasUnpriced ? " + items priced on request" : ""} (excluding delivery charges)`,
   ];
   const name = details.name?.trim();
   const note = details.note?.trim();

@@ -35,8 +35,8 @@ export function Hero() {
             Handmade, pure-veg tiramisu in three signature flavours — <strong>Classic</strong>, <strong>Chocolate</strong> and <strong>High-Protein</strong> — crafted the Italian way and delivered with Indian warmth.
           </p>
           <div className="lp-hero-ctas reveal" style={{ "--d": "260ms" } as React.CSSProperties}>
-            <a className="lp-btn lp-btn--wa lp-btn--lg" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
-              <Icon name="whatsapp" /> Order on WhatsApp
+            <a className="lp-btn lp-btn--primary lp-btn--lg" href="#menu">
+              Order now <Icon name="arrow" size={18} />
             </a>
             <a className="lp-btn lp-btn--ghost lp-btn--lg" href="#tiramisu">
               Explore Tiramisu <Icon name="arrow" size={18} />
@@ -67,7 +67,7 @@ export function Hero() {
           </div>
           <div className="lp-hero-card lp-hero-card--wa">
             <span className="lp-hero-card-icon"><Icon name="whatsapp" size={20} /></span>
-            <span><strong>Order in a tap</strong><br />on WhatsApp</span>
+            <span><strong>Order in a tap</strong><br />on WhatsApp or Instagram</span>
           </div>
           <svg className="lp-badge-spin" viewBox="0 0 120 120" aria-hidden="true">
             <defs><path id="badge-circle" d="M60 60 m-46 0 a46 46 0 1 1 92 0 a46 46 0 1 1 -92 0" /></defs>
@@ -187,9 +187,8 @@ export function Signature() {
                 <p className="lp-dish-tagline">{item.tagline}</p>
                 <p>{item.description}</p>
                 <ul className="lp-chips">{item.notes.map((n) => <li key={n}>{n}</li>)}</ul>
-                <a className="lp-btn lp-btn--wa lp-btn--block" target="_blank" rel="noopener noreferrer"
-                  href={whatsappLink(`Hi DOLCE! I'd like to order the ${item.name}.`)}>
-                  <Icon name="whatsapp" size={18} /> Order {item.italian}
+                <a className="lp-btn lp-btn--primary lp-btn--block" href="#menu">
+                  Order {item.italian} <Icon name="arrow" size={18} />
                 </a>
               </div>
             </article>

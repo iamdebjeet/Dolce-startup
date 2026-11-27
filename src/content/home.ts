@@ -40,7 +40,7 @@ export const signatureItems: {
     description:
       "Coffee-soaked ladyfingers layered with silky mascarpone cream and finished with a generous dusting of cocoa. Light, creamy and true to the Italian original.",
     notes: ["Espresso", "Mascarpone", "Cocoa"],
-    badge: "Bestseller",
+    badge: "The original",
     icon: "cup",
     image: tiramisuPlate,
     accent: "var(--terracotta)",
@@ -49,11 +49,11 @@ export const signatureItems: {
     id: "chocolate",
     italian: "Al Cioccolato",
     name: "Chocolate Tiramisu",
-    tagline: "For the chocolate lovers",
+    tagline: "Our bestseller — for chocolate lovers",
     description:
       "Our classic, made deeper and richer with layers of chocolate in every spoonful. Indulgent without being too sweet — perfect for celebrations.",
     notes: ["Dark chocolate", "Coffee", "Cream"],
-    badge: "Celebration pick",
+    badge: "Bestseller",
     icon: "heart",
     image: chocolateCups,
     accent: "var(--vino)",
@@ -102,8 +102,8 @@ export const values: { title: string; text: string; icon: IconName }[] = [
 ];
 
 export const orderSteps: { title: string; text: string; icon: IconName }[] = [
-  { title: "Pick from our menu", text: "Add what you love to your basket and tap Order Now — your order opens in WhatsApp, ready to send.", icon: "whatsapp" },
-  { title: "We confirm your order", text: "We’ll reply with availability, the total, and pickup or delivery details.", icon: "check" },
+  { title: "Pick from our menu", text: "Add what you love to your basket, tap Order Now and send it to us on WhatsApp or Instagram.", icon: "cup" },
+  { title: "We confirm your order", text: "We’ll reply with availability, delivery charges and the final total.", icon: "check" },
   { title: "Enjoy your dolce", text: "Fresh, chilled and ready to make someone’s day a little sweeter.", icon: "heart" },
 ];
 
@@ -122,7 +122,8 @@ export const reviews: { name: string; rating: number; text: string; item: string
 
 export const faqs: { q: string; a: string }[] = [
   { q: "Is DOLCE pure vegetarian?", a: "Yes! DOLCE is a 100% pure vegetarian café. Everything on our menu — every tiramisu, dessert and drink — is vegetarian, so the whole family can order with confidence." },
-  { q: "How do I place an order?", a: "Add items from our menu to your basket and tap Order Now — WhatsApp opens with your order already written, so you just press Send. You can also message us directly. We’ll confirm availability, the total and pickup or delivery details." },
+  { q: "How do I place an order?", a: "Add items from our menu to your basket and tap Order Now, then choose WhatsApp or Instagram. On WhatsApp your order is written for you — just press Send. On Instagram we copy your order so you can paste it into the chat. We’ll confirm availability, delivery and the final total." },
+  { q: "Are delivery charges included?", a: "No — menu prices and the basket total exclude delivery charges. We’ll tell you the delivery charge for your location when we confirm your order." },
   { q: "Do you take orders for parties and celebrations?", a: "Yes! Birthdays, anniversaries, festivals, office treats — message us in advance for larger orders so we can make everything fresh for your day." },
   { q: "What is the High-Protein Tiramisu?", a: "It’s our lighter, protein-rich take on the classic, made for people who love dessert and an active lifestyle. Ask us on WhatsApp for its ingredients and nutrition details." },
   { q: "Do your desserts contain alcohol or allergens?", a: "Ingredients differ between flavours. Message us before ordering and we’ll share the full ingredient and allergen details for each one." },

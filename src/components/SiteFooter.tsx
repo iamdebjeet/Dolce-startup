@@ -1,6 +1,7 @@
 import { Icon } from "./icons";
 import { PureVegBadge, Tricolore } from "./decor";
-import { site, whatsappLink } from "@/lib/site";
+import { instagramProfileUrl, site } from "@/lib/site";
+import ChatLinks from "./ChatLinks";
 
 export default function SiteFooter({ onHome = false }: { onHome?: boolean }) {
   const h = (id: string) => (onHome ? `#${id}` : `/#${id}`);
@@ -23,9 +24,12 @@ export default function SiteFooter({ onHome = false }: { onHome?: boolean }) {
         </nav>
         <div>
           <h4>Order</h4>
-          <p>We currently take orders on WhatsApp only.</p>
-          <a className="lp-btn lp-btn--wa lp-btn--sm" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
-            <Icon name="whatsapp" size={16} /> Chat with us
+          <p>Order from our menu and send it on WhatsApp or Instagram.</p>
+          <a className="lp-btn lp-btn--primary lp-btn--sm" href={h("menu")}>Order now <Icon name="arrow" size={16} /></a>
+          <p className="lp-footer-chat">Chat with us:</p>
+          <ChatLinks size="sm" />
+          <a className="lp-footer-ig" href={instagramProfileUrl} target="_blank" rel="noopener noreferrer">
+            <Icon name="instagram" size={16} /> @{site.instagramUsername}
           </a>
         </div>
       </div>

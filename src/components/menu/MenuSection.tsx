@@ -1,5 +1,5 @@
 import { getPublicMenu } from "@/lib/data";
-import { whatsappLink } from "@/lib/site";
+import ChatLinks from "../ChatLinks";
 import { Icon } from "../icons";
 import { VegMark } from "../decor";
 import SectionHead from "../home/SectionHead";
@@ -9,7 +9,7 @@ function Head() {
   return (
     <>
       <SectionHead center eyebrow="Our menu" title={<>Pick, add, <em>order</em></>} hindi="जो मन करे, चुनिए"
-        intro="Browse by category, add what you love to your basket, and send your order to us on WhatsApp in one tap." />
+        intro="Browse by category, add what you love to your basket, and send your order to us on WhatsApp or Instagram." />
       <p className="mn-veg-note reveal">
         <VegMark size={18} label="" /> Everything on our menu is <strong>100% pure vegetarian</strong>
         <span lang="hi" className="lp-hindi"> · शुद्ध शाकाहारी</span>
@@ -38,9 +38,7 @@ export default async function MenuSection() {
             <span className="lp-icon-badge"><Icon name="cup" size={26} /></span>
             <h3>{failed ? "Our menu is taking a short break" : "Our menu is being freshly prepared"}</h3>
             <p>{failed ? "Please check back in a little while." : "New dishes are coming soon."} Meanwhile, our signature tiramisu is just a message away.</p>
-            <a className="lp-btn lp-btn--wa" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
-              <Icon name="whatsapp" size={18} /> Order on WhatsApp
-            </a>
+            <ChatLinks whatsappMessage="Hi DOLCE! I'd like to place an order." />
           </div>
         ) : (
           <MenuBrowser menu={menu} />
