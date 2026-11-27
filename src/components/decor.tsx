@@ -63,3 +63,23 @@ export function Marigold({ size = 14 }: { size?: number }) {
     </svg>
   );
 }
+
+/** Indian vegetarian symbol: green square with a green dot. */
+export function VegMark({ size = 16, className = "", label = "Vegetarian" }: { size?: number; className?: string; label?: string }) {
+  return (
+    <svg className={`veg-mark ${className}`} width={size} height={size} viewBox="0 0 20 20"
+      {...(label ? { role: "img", "aria-label": label } : { "aria-hidden": true })}>
+      <rect x="1.25" y="1.25" width="17.5" height="17.5" rx="2.5" fill="#fff" stroke="#138a36" strokeWidth="2" />
+      <circle cx="10" cy="10" r="5" fill="#138a36" />
+    </svg>
+  );
+}
+
+/** "100% Pure Veg" pill with the veg symbol. */
+export function PureVegBadge({ className = "" }: { className?: string }) {
+  return (
+    <span className={`veg-badge ${className}`}>
+      <VegMark size={16} label="" /> 100% Pure Veg
+    </span>
+  );
+}

@@ -6,6 +6,7 @@ import { basketKey, useBasket } from "@/lib/basket";
 import { buildOrderMessage, formatRupees, orderTotals, type OrderLine } from "@/lib/order";
 import { whatsappLink } from "@/lib/site";
 import { Icon } from "../icons";
+import { VegMark } from "../decor";
 
 type Menu = Awaited<ReturnType<typeof getPublicMenu>>;
 type Entry = { item: MenuItemDTO; optionId: string | null; option: string | null; price: number | null };
@@ -117,7 +118,7 @@ export default function MenuBrowser({ menu }: { menu: Menu }) {
                 )}
                 <div className="mn-card-body">
                   <div className="mn-card-title">
-                    <h4>{item.name}</h4>
+                    <h4><VegMark size={16} className="mn-veg" /> {item.name}</h4>
                     <div className="mn-tags">
                       <span className={`mn-tag mn-tag--${item.temperature.toLowerCase()}`}>{TEMPERATURE[item.temperature]}</span>
                       {item.spiceIndex > 0 && (

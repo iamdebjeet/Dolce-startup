@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Icon, Stars } from "../icons";
-import { Garland, Mandala } from "../decor";
+import { Garland, Mandala, PureVegBadge, VegMark } from "../decor";
 import SectionHead from "./SectionHead";
 import { marqueeWords, purpose, reviews, signatureItems, values } from "@/content/home";
 import { whatsappLink } from "@/lib/site";
@@ -23,13 +23,16 @@ export function Hero() {
       <Mandala className="lp-hero-mandala" />
       <div className="lp-shell lp-hero-grid">
         <div className="lp-hero-copy">
-          <p className="lp-pill reveal"><span className="lp-pill-dot" /> Benvenuti · Italian café, made in India</p>
+          <div className="lp-hero-badges reveal">
+            <p className="lp-pill"><span className="lp-pill-dot" /> Benvenuti · Italian café, made in India</p>
+            <PureVegBadge />
+          </div>
           <h1 className="reveal" style={{ "--d": "80ms" } as React.CSSProperties}>
             A little taste of <em>Italy</em>, with an <span className="lp-saffron">Indian heart.</span>
           </h1>
           <p className="lp-hindi lp-hero-hindi reveal" lang="hi" style={{ "--d": "140ms" } as React.CSSProperties}>इटली का स्वाद, भारत का दिल</p>
           <p className="lp-hero-lead reveal" style={{ "--d": "200ms" } as React.CSSProperties}>
-            Handmade tiramisu in three signature flavours — <strong>Classic</strong>, <strong>Chocolate</strong> and <strong>High-Protein</strong> — crafted the Italian way and delivered with Indian warmth.
+            Handmade, pure-veg tiramisu in three signature flavours — <strong>Classic</strong>, <strong>Chocolate</strong> and <strong>High-Protein</strong> — crafted the Italian way and delivered with Indian warmth.
           </p>
           <div className="lp-hero-ctas reveal" style={{ "--d": "260ms" } as React.CSSProperties}>
             <a className="lp-btn lp-btn--wa lp-btn--lg" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
@@ -40,9 +43,9 @@ export function Hero() {
             </a>
           </div>
           <ul className="lp-hero-facts reveal" style={{ "--d": "320ms" } as React.CSSProperties}>
-            <li><strong>3</strong><span>signature<br />tiramisus</span></li>
-            <li><strong>100%</strong><span>made<br />by hand</span></li>
-            <li><strong>{avgRating.toFixed(1)}★</strong><span>customer<br />love</span></li>
+            <li><strong>3</strong><span>signature <br />tiramisus</span></li>
+            <li><strong className="lp-fact-veg"><VegMark size={22} label="" />100%</strong><span>pure <br />veg</span></li>
+            <li><strong>{avgRating.toFixed(1)}★</strong><span>customer <br />love</span></li>
           </ul>
         </div>
 
@@ -84,7 +87,10 @@ export function Marquee() {
   return (
     <div className="lp-marquee" aria-hidden="true">
       <div className="lp-marquee-track">
-        {words.map((w, i) => <span key={i}>{w}<i>✦</i></span>)}
+        {words.map((w, i) => {
+          const hindi = /[ऀ-ॿ]/.test(w);
+          return <span key={i} className={hindi ? "is-hi" : undefined} lang={hindi ? "hi" : undefined}>{w}<i>✦</i></span>;
+        })}
       </div>
     </div>
   );
@@ -114,6 +120,10 @@ export function Story() {
               We wanted that feeling here at home in India. So we started where every Italian dessert story starts — with
               <strong> tiramisu</strong>. We make it by hand, layer by layer, and serve it with the warmth of Indian
               hospitality, because here, <em>atithi devo bhava</em> — every guest is family.
+            </p>
+            <p>
+              DOLCE is a <strong>100% pure vegetarian café</strong> — everything we make and serve is vegetarian, so every
+              family can enjoy it without a second thought.
             </p>
             <p>Today we’re a small, growing Italian café brand, and every order is still made with the same care as the very first one.</p>
           </div>
@@ -162,7 +172,7 @@ export function Signature() {
     <section id="tiramisu" className="lp-section lp-signature">
       <div className="lp-shell">
         <SectionHead center eyebrow="Our signature" title={<>The Tiramisu <em>Trio</em></>} hindi="हर चम्मच में इटली"
-          intro="Tiramisu means “pick me up” in Italian. Ours comes in three moods — pick yours." />
+          intro="Tiramisu means “pick me up” in Italian. Ours comes in three moods — all 100% pure veg. Pick yours." />
         <div className="lp-trio">
           {signatureItems.map((item, i) => (
             <article key={item.id} className="lp-dish reveal" style={{ "--d": `${i * 120}ms`, "--accent": item.accent } as React.CSSProperties}>
@@ -173,7 +183,7 @@ export function Signature() {
               </div>
               <div className="lp-dish-body">
                 <p className="lp-dish-it" lang="it">{item.italian}</p>
-                <h3>{item.name}</h3>
+                <h3 className="lp-dish-name"><VegMark size={18} /> {item.name}</h3>
                 <p className="lp-dish-tagline">{item.tagline}</p>
                 <p>{item.description}</p>
                 <ul className="lp-chips">{item.notes.map((n) => <li key={n}>{n}</li>)}</ul>

@@ -1,13 +1,20 @@
 import { getPublicMenu } from "@/lib/data";
 import { whatsappLink } from "@/lib/site";
 import { Icon } from "../icons";
+import { VegMark } from "../decor";
 import SectionHead from "../home/SectionHead";
 import MenuBrowser from "./MenuBrowser";
 
 function Head() {
   return (
-    <SectionHead center eyebrow="Our menu" title={<>Pick, add, <em>order</em></>} hindi="जो मन करे, चुनिए"
-      intro="Browse by category, add what you love to your basket, and send your order to us on WhatsApp in one tap." />
+    <>
+      <SectionHead center eyebrow="Our menu" title={<>Pick, add, <em>order</em></>} hindi="जो मन करे, चुनिए"
+        intro="Browse by category, add what you love to your basket, and send your order to us on WhatsApp in one tap." />
+      <p className="mn-veg-note reveal">
+        <VegMark size={18} label="" /> Everything on our menu is <strong>100% pure vegetarian</strong>
+        <span lang="hi" className="lp-hindi"> · शुद्ध शाकाहारी</span>
+      </p>
+    </>
   );
 }
 

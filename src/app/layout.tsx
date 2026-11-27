@@ -8,11 +8,11 @@ const hindi = Tiro_Devanagari_Hindi({ subsets: ["devanagari", "latin"], weight: 
 const script = Great_Vibes({ subsets: ["latin"], weight: "400", variable: "--font-script", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "DOLCE | A Little Taste of Italy — Italian Café in India",
-  description: "DOLCE is an Italian café in India. Handmade Classic, Chocolate and High-Protein Tiramisu — order on WhatsApp.",
+  title: "DOLCE | A Little Taste of Italy — Pure Veg Italian Café in India",
+  description: "DOLCE is a 100% pure veg Italian café in India. Handmade Classic, Chocolate and High-Protein Tiramisu — order on WhatsApp.",
   openGraph: {
     title: "DOLCE | A Little Taste of Italy",
-    description: "Handmade Classic, Chocolate and High-Protein Tiramisu. Order on WhatsApp.",
+    description: "Pure veg Italian café. Handmade Classic, Chocolate and High-Protein Tiramisu. Order on WhatsApp.",
     type: "website",
   },
 };

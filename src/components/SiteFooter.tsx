@@ -1,5 +1,5 @@
 import { Icon } from "./icons";
-import { Tricolore } from "./decor";
+import { PureVegBadge, Tricolore } from "./decor";
 import { site, whatsappLink } from "@/lib/site";
 
 export default function SiteFooter({ onHome = false }: { onHome?: boolean }) {
@@ -11,6 +11,7 @@ export default function SiteFooter({ onHome = false }: { onHome?: boolean }) {
         <div>
           <div className="lp-logo lp-logo--light"><span>DOLCE</span><small>Italian Café · India</small></div>
           <p className="lp-footer-tag">{site.tagline}<br /><span lang="hi" className="lp-hindi">{site.hindiTagline}</span></p>
+          <PureVegBadge className="veg-badge--dark" />
         </div>
         <nav aria-label="Footer">
           <h4>Explore</h4>

@@ -15,7 +15,7 @@ export const site = {
   hindiTagline: "इटली का एक मीठा स्वाद",
   whatsappNumber: normaliseWhatsApp(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || DEFAULT_WHATSAPP),
   /** Google Form where customers rate & review DOLCE (used by the review QR code and button). */
-  reviewFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdjOyWIKz2QctRep1xO0uUYQWjb8kQukceA83U-4syXOXI3jQ/viewform",
+  reviewFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLScRnKptqMQ6naYkkp2DHPF5QzPyL21212myweUW9n0DdkgNIg/viewform",
 };
 
 /** wa.me link that opens a chat with DOLCE's number and a pre-filled message (the customer taps Send). */

@@ -96,9 +96,9 @@ export const purpose: { title: string; hindi: string; text: string; icon: IconNa
 
 export const values: { title: string; text: string; icon: IconName }[] = [
   { title: "Fatto a mano", text: "Handmade in small batches, never mass-produced.", icon: "hand" },
-  { title: "Fresh, always", text: "Made to order so it reaches you at its best.", icon: "leaf" },
+  { title: "Fresh, always", text: "Made to order so it reaches you at its best.", icon: "clock" },
   { title: "Atithi Devo Bhava", text: "Every customer is a guest — and guests are treated with love.", icon: "sparkle" },
-  { title: "Something for everyone", text: "From the classic to a high-protein twist.", icon: "gift" },
+  { title: "100% Pure Veg", text: "A pure vegetarian café — everything we make and serve is vegetarian.", icon: "leaf" },
 ];
 
 export const orderSteps: { title: string; text: string; icon: IconName }[] = [
@@ -121,10 +121,11 @@ export const reviews: { name: string; rating: number; text: string; item: string
 ];
 
 export const faqs: { q: string; a: string }[] = [
+  { q: "Is DOLCE pure vegetarian?", a: "Yes! DOLCE is a 100% pure vegetarian café. Everything on our menu — every tiramisu, dessert and drink — is vegetarian, so the whole family can order with confidence." },
   { q: "How do I place an order?", a: "Add items from our menu to your basket and tap Order Now — WhatsApp opens with your order already written, so you just press Send. You can also message us directly. We’ll confirm availability, the total and pickup or delivery details." },
   { q: "Do you take orders for parties and celebrations?", a: "Yes! Birthdays, anniversaries, festivals, office treats — message us in advance for larger orders so we can make everything fresh for your day." },
   { q: "What is the High-Protein Tiramisu?", a: "It’s our lighter, protein-rich take on the classic, made for people who love dessert and an active lifestyle. Ask us on WhatsApp for its ingredients and nutrition details." },
-  { q: "Do your desserts contain eggs, alcohol or allergens?", a: "Ingredients differ between flavours. Message us before ordering and we’ll share the full ingredient and allergen details for each one." },
+  { q: "Do your desserts contain alcohol or allergens?", a: "Ingredients differ between flavours. Message us before ordering and we’ll share the full ingredient and allergen details for each one." },
   { q: "How should I store my tiramisu?", a: "Keep it refrigerated and enjoy it fresh. We’ll tell you the best-before time when you order." },
 ];
 
@@ -142,5 +143,5 @@ export const gallery: { src: StaticImageData; alt: string; tall?: boolean }[] = 
 ];
 
 export const marqueeWords = [
-  "Mascarpone", "Espresso", "Cocoa", "Savoiardi", "Fatto a mano", "मिठास", "La dolce vita", "Made fresh", "Benvenuti", "स्वाद",
+  "Mascarpone", "Espresso", "100% Pure Veg", "Cocoa", "Savoiardi", "शुद्ध शाकाहारी", "Fatto a mano", "मिठास", "La dolce vita", "Made fresh", "Benvenuti", "स्वाद",
 ];
